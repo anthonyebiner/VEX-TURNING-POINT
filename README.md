@@ -9,7 +9,7 @@ ONLY TOUCH THE FOLLOWING FILES:
   
 DO NOT TOUCH ANYTHING ELSE
 
-/////////////////////////////////////////////////////
+-------------------------------------------------------------------------------------------
 
 API: https://pros.cs.purdue.edu/v5/api/cpp/index.html
 
