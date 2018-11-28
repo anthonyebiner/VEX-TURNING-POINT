@@ -171,6 +171,4 @@ void opcontrol() {
 }
 
 
-
-
-b
+c
