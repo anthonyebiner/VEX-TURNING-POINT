@@ -136,5 +136,3 @@ void shootMid(){
   shootBall(velocityMid());
   control = true;
 }
-
-//test this is a test
