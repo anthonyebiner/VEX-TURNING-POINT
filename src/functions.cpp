@@ -1,6 +1,6 @@
-#include "headerTest.hpp"
+#include "declareStuff.hpp"
 
-float distanceToDegreesFront(float distance){
+float distanceToDegreesFront(int distance){
   float degrees = 0;
   degrees = 360*((distance)/(3.14159*frontWheelDiameter));
   return degrees;
@@ -16,7 +16,7 @@ int distanceToFlags(){
   vision_object_s_t flag = VisionSensor.get_by_size(0);
   delay(200);
   return flag.height;
-  //return ((midFlagHeight)/(tanf(FOV/360*3.14159-atan((1-(2*(FOV-flag.top_coord-flag.height))/sizeOfVisionField)*tanf(FOV/360*3.14159)))));
+  //return ((midFlagHeight)/(tanf(FOV/360*3.14159-atan((1-(2*(FOV-flag.top_coord-flag.height))/VISION_FOV_HEIGHT)*tanf(FOV/360*3.14159)))));
 }
 
 float velocityHigh(){
@@ -110,7 +110,7 @@ void centerShot(){
   vision_object_s_t flag = VisionSensor.get_by_sig(0, 1);
   int error = centerShotTolerance + 1;
   while(abs(error) > centerShotTolerance){
-    error=flag.x_middle_coord;
+    error=flag.x_middle_coord-(VISION_FOV_WIDTH/2);
     FrontLeftM.move(-error/kp);
     FrontRightM.move(error/kp);
     BackLeftM.move(-error/kp);
@@ -135,4 +135,15 @@ void shootMid(){
   centerShot();
   shootBall(velocityMid());
   control = true;
+}
+
+void resetPositions(){
+  FrontRightM.tare_position();
+  FrontLeftM.tare_position();
+  BackRightM.tare_position();
+  BackLeftM.tare_position();
+  IntakeM.tare_position();
+  LiftM.tare_position();
+  Flywheel1M.tare_position();
+  Flywheel2M.tare_position();
 }
