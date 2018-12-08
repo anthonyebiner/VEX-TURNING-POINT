@@ -5,8 +5,8 @@ Motor BackRightM(3, MOTOR_GEARSET_36, true, MOTOR_ENCODER_DEGREES);
 Motor BackLeftM(4, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
 Motor IntakeM(5, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
 Motor LiftM(6, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
-Motor Flywheel1M(7, MOTOR_GEARSET_6, false, MOTOR_ENCODER_DEGREES);
-Motor Flywheel2M(8, MOTOR_GEARSET_6, true, MOTOR_ENCODER_DEGREES);
+Motor Flywheel1M(7, MOTOR_GEARSET_6, true, MOTOR_ENCODER_DEGREES);
+Motor Flywheel2M(8, MOTOR_GEARSET_6, false, MOTOR_ENCODER_DEGREES);
 
 Vision VisionSensor(9);
 
@@ -26,7 +26,6 @@ int kp = 1;
 int distanceSeperation = 10; //inches
 int highVelocities [10] = {10,15,20,25,30,35,40,45,50,55}; //fill these in
 int midVelocities [10] = {5,10,15,20,25,30,35,40,45,50}; //fill these in
-
 
 void initialize() {
 	resetPositions();
