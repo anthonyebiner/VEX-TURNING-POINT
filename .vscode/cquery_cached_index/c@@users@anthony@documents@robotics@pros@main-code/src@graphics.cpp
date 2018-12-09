@@ -1,5 +1,6 @@
 #include "declareStuff.hpp"
-/*Called when a button is released ot long pressed*/
+
+/*Called when a button is released or long pressed*/
 static lv_res_t btnm_action(lv_obj_t * btnm, const char *txt)
 {
     printf("Button: %s released\n", txt);
@@ -8,16 +9,6 @@ static lv_res_t btnm_action(lv_obj_t * btnm, const char *txt)
 }
 
 void initGraphics() {
-	resetPositions();
-	Flywheel1M.set_brake_mode(MOTOR_BRAKE_COAST);
-	Flywheel2M.set_brake_mode(MOTOR_BRAKE_COAST);
-	IntakeM.set_brake_mode(MOTOR_BRAKE_BRAKE);
-	LiftM.set_brake_mode(MOTOR_BRAKE_HOLD);
-	FrontLeftM.set_brake_mode(MOTOR_BRAKE_HOLD);
-	FrontRightM.set_brake_mode(MOTOR_BRAKE_HOLD);
-	BackRightM.set_brake_mode(MOTOR_BRAKE_HOLD);
-	BackLeftM.set_brake_mode(MOTOR_BRAKE_HOLD);
-
 	/*Create a button descriptor string array*/
 	static const char * btnm_map[] = {"1", "2", "3", "4", "\n", "5", "6", "7", "8",""};
 
