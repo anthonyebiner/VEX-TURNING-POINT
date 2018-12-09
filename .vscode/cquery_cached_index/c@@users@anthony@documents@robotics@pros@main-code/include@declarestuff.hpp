@@ -45,4 +45,6 @@ extern void centerShot();
 extern void shootHigh();
 extern void shootMid();
 extern void resetPositions();
+
+extern void initGraphics();
 #endif
