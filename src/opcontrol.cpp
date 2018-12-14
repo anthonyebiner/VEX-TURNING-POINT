@@ -22,7 +22,7 @@ Purpose:						Competition code for 6526D
 int velocity = -550;
 bool control = true;
 
-int adjust = 1; //number divided by motor power in order to keep recording a managable speed
+int adjust = 1; //number divided by motor power in order to keep recording at a managable speed
 bool recording = false; //are we recording
 
 int positionsTemp;
