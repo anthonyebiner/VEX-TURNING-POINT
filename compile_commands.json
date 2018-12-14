@@ -133,11 +133,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/graphics.cpp.o",
-            "src\\graphics.cpp"
+            "bin/initialize.cpp.o",
+            "src\\initialize.cpp"
         ],
         "directory": "C:\\Users\\Anthony\\Documents\\Robotics\\Pros\\main-code",
-        "file": "src\\graphics.cpp"
+        "file": "src\\initialize.cpp"
     },
     {
         "arguments": [
@@ -168,10 +168,10 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/initialize.cpp.o",
-            "src\\initialize.cpp"
+            "bin/graphics.cpp.o",
+            "src\\graphics.cpp"
         ],
         "directory": "C:\\Users\\Anthony\\Documents\\Robotics\\Pros\\main-code",
-        "file": "src\\initialize.cpp"
+        "file": "src\\graphics.cpp"
     }
 ]
