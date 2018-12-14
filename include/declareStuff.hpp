@@ -31,6 +31,8 @@ extern int distanceSeperation;
 extern int highVelocities[];
 extern int midVelocities[];
 
+extern int auton;
+
 extern int distanceToFlags();
 
 extern void moveForward();

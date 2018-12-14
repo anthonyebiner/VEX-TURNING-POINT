@@ -2,9 +2,25 @@
 
 /*Called when a button is released or long pressed*/
 static lv_res_t btnm_action(lv_obj_t * btnm, const char *txt)
-{
-    printf("Button: %s released\n", txt);
-
+{/*
+    if(txt == "Red Front 1"){
+      auton = 1;
+    }else if(txt == "Red Front 2"){
+      auton = 2;
+    }else if(txt == "Red Back 1"){
+      auton = 3;
+    }else if(txt == "Red Back 2"){
+      auton = 4;
+    }else if(txt == "Blue Front 1"){
+      auton = 5;
+    }else if(txt == "Blue Front 2"){
+      auton = 6;
+    }else if(txt == "Blue Back 1"){
+      auton = 7
+    }else if(txt == "Blue Back 2"){
+      auton = 8;
+    }
+*/
     return LV_RES_OK; /*Return OK because the button matrix is not deleted*/
 }
 
