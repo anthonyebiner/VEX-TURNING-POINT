@@ -44,5 +44,8 @@ extern void alignFront();
 extern void centerShot();
 extern void shootHigh();
 extern void shootMid();
+extern void scoreCapLow();
+extern void scoreCapHigh();
+
 extern void resetPositions();
 #endif

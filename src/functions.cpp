@@ -67,7 +67,7 @@ void shootBall(float targetVelocity){
   Flywheel1M.move_velocity(targetVelocity);
   Flywheel2M.move_velocity(targetVelocity);
   while(Flywheel1M.get_actual_velocity() - targetVelocity > 1 && Flywheel2M.get_actual_velocity() - targetVelocity > 1){
-    if(MasterC.get_digital(DIGITAL_X) || MasterC.get_digital(DIGITAL_B) || MasterC.get_digital(DIGITAL_A)){
+    if(!MasterC.get_digital(DIGITAL_X) && !MasterC.get_digital(DIGITAL_B) && !MasterC.get_digital(DIGITAL_A)){
       control = true;
       return;
     }
@@ -75,7 +75,7 @@ void shootBall(float targetVelocity){
   }
   IntakeM.move(100);
   while(Flywheel1M.get_actual_velocity() - targetVelocity < 1 && Flywheel2M.get_actual_velocity() - targetVelocity < 1){
-    if(MasterC.get_digital(DIGITAL_X) || MasterC.get_digital(DIGITAL_B) || MasterC.get_digital(DIGITAL_A)){
+    if(!MasterC.get_digital(DIGITAL_X) && !MasterC.get_digital(DIGITAL_B) && !MasterC.get_digital(DIGITAL_A)){
       control = true;
       IntakeM.move(0);
       return;
@@ -115,7 +115,7 @@ void centerShot(){
     FrontRightM.move(error/kp);
     BackLeftM.move(-error/kp);
     BackRightM.move(error/kp);
-    if(MasterC.get_digital(DIGITAL_X) || MasterC.get_digital(DIGITAL_B) || MasterC.get_digital(DIGITAL_A)){
+    if(!MasterC.get_digital(DIGITAL_X) && !MasterC.get_digital(DIGITAL_B) && !MasterC.get_digital(DIGITAL_A)){
       control = true;
       return;
     }
@@ -134,6 +134,22 @@ void shootMid(){
   control = false;
   centerShot();
   shootBall(velocityMid());
+  control = true;
+}
+
+void scoreCapLow(){
+  control = false;
+  while(MasterC.get_digital(DIGITAL_R2)){
+
+  }
+  control = true;
+}
+
+void scoreCapHigh(){
+  control = false;
+  while(MasterC.get_digital(DIGITAL_R1)){
+
+  }
   control = true;
 }
 

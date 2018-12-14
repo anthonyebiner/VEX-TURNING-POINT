@@ -75,13 +75,13 @@ void opcontrol() {
   			IntakeM.move(0);
   		}
 
-    	if(MasterC.get_digital(DIGITAL_X)){
-    		LiftM.move(127);
-    	}else if(MasterC.get_digital(DIGITAL_B)){
-  			LiftM.move(-127);
-  		}else{
-  			LiftM.move(0);
-  		}
+      if(MasterC.get_digital(DIGITAL_R2)){
+        scoreCapLow();
+      }else if(MasterC.get_digital(DIGITAL_R1)){
+        scoreCapHigh();
+      }else{
+        LiftM.move(ANALOG_RIGHT_Y);
+      }
 
       int power = MasterC.get_analog(ANALOG_LEFT_Y);
       int turn = MasterC.get_analog(ANALOG_LEFT_X);
@@ -99,30 +99,30 @@ void opcontrol() {
    		FrontLeftM.move(left/adjust);
    		BackLeftM.move(left/adjust);
    		BackRightM.move(right/adjust);
-    }
 
-    if(MasterC.get_digital(DIGITAL_R1)){
-      velocity = velocity - 10;
-      while(MasterC.get_digital(DIGITAL_R1)){}
-      MasterC.print(0, 0, "target: %d", abs(velocity));
-    }else if(MasterC.get_digital(DIGITAL_R2)){
-      velocity = velocity + 10;
-      while(MasterC.get_digital(DIGITAL_R2)){}
-      MasterC.print(0, 0, "target: %d", abs(velocity));
-    }
+      if(MasterC.get_digital(DIGITAL_R1)){
+        velocity = velocity - 10;
+        while(MasterC.get_digital(DIGITAL_R1)){}
+        MasterC.print(0, 0, "target: %d", abs(velocity));
+      }else if(MasterC.get_digital(DIGITAL_R2)){
+        velocity = velocity + 10;
+        while(MasterC.get_digital(DIGITAL_R2)){}
+        MasterC.print(0, 0, "target: %d", abs(velocity));
+      }
 
-    if(MasterC.get_digital(DIGITAL_A)){
-      Flywheel1M.move_velocity(velocity);
-      Flywheel2M.move_velocity(velocity);
-    }else if(MasterC.get_digital(DIGITAL_X)){
-      shootHigh();
-      while(MasterC.get_digital(DIGITAL_X)){delay(5);}
-    }else if(MasterC.get_digital(DIGITAL_B)){
-      shootMid();
-      while(MasterC.get_digital(DIGITAL_B)){delay(5);}
-    }else{
-      Flywheel1M.move(0);
-      Flywheel2M.move(0);
+      if(MasterC.get_digital(DIGITAL_A)){
+        Flywheel1M.move_velocity(velocity);
+        Flywheel2M.move_velocity(velocity);
+      }else if(MasterC.get_digital(DIGITAL_X)){
+        shootHigh();
+        while(MasterC.get_digital(DIGITAL_X)){delay(5);}
+      }else if(MasterC.get_digital(DIGITAL_B)){
+        shootMid();
+        while(MasterC.get_digital(DIGITAL_B)){delay(5);}
+      }else{
+        Flywheel1M.move(0);
+        Flywheel2M.move(0);
+      }
     }
 
     if(abs(velocity) - fabs(Flywheel1M.get_actual_velocity()) < 5){
