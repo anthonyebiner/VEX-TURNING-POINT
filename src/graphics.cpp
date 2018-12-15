@@ -1,64 +1,113 @@
 #include "declareStuff.hpp"
 
-/*Called when a button is released or long pressed*/
-static lv_res_t btnm_action(lv_obj_t * btnm, const char *txt)
-{/*
-    if(txt == "Red Front 1"){
-      auton = 1;
-    }else if(txt == "Red Front 2"){
-      auton = 2;
-    }else if(txt == "Red Back 1"){
-      auton = 3;
-    }else if(txt == "Red Back 2"){
-      auton = 4;
-    }else if(txt == "Blue Front 1"){
-      auton = 5;
-    }else if(txt == "Blue Front 2"){
-      auton = 6;
-    }else if(txt == "Blue Back 1"){
-      auton = 7
-    }else if(txt == "Blue Back 2"){
-      auton = 8;
+static lv_res_t btn_click_action(lv_obj_t * btn)
+{
+    uint8_t id = lv_obj_get_free_num(btn);
+
+    printf("Button %d is released\n", id);
+
+    if(id == 1){
+      MasterC.print(0,0,"RED",NULL);
+      autonColor = 1;
+    }else if(id == 2){
+      MasterC.print(0,0,"BLUE",NULL);
+      autonColor = 2;
+    }else if(id == 3){
+      MasterC.print(0,0,"FRONT",NULL);
+      autonSide = 1;
+    }else if(id == 4){
+      MasterC.print(0,0,"BACK",NULL);
+      autonSide = 2;
+    }else if(id == 5){
+      MasterC.print(0,0,"1",NULL);
+      autonNumber = 1;
+    }else if(id == 6){
+      MasterC.print(0,0,"2",NULL);
+      autonNumber = 2;
     }
-*/
-    return LV_RES_OK; /*Return OK because the button matrix is not deleted*/
+
+    return LV_RES_OK; /*Return OK if the button is not deleted*/
 }
 
+
 void initGraphics() {
-	/*Create a button descriptor string array*/
-	static const char * btnm_map[] = {"Red Front 1", "Red Front 2", "Red Back 1", "Red Back 2", "\n", "Blue Front 1", "Blue Front 2", "Blue Back 1", "Blue Back 2",""};
+  /*Create a title label*/
+  lv_obj_t * label = lv_label_create(lv_scr_act(), NULL);
+  lv_label_set_text(label, "Color");
+  lv_obj_align(label, NULL, LV_ALIGN_IN_TOP_LEFT, 50, 5);
 
-	/*Create a new style for the button matrix back ground*/
-	static lv_style_t style_bg;
-	lv_style_copy(&style_bg, &lv_style_plain);
-	style_bg.body.main_color = LV_COLOR_SILVER;
-	style_bg.body.grad_color = LV_COLOR_SILVER;
-	style_bg.body.padding.hor = 0;
-	style_bg.body.padding.ver = 0;
-	style_bg.body.padding.inner = 0;
+  /*Create a normal button*/
+  lv_obj_t * btn1 = lv_btn_create(lv_scr_act(), NULL);
+  lv_cont_set_fit(btn1, true, true); /*Enable resizing horizontally and vertically*/
+  lv_obj_align(btn1, label, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
+  lv_obj_set_free_num(btn1, 1);   /*Set a unique number for the button*/
+  lv_btn_set_action(btn1, LV_BTN_ACTION_CLICK, btn_click_action);
 
-	/*Create 2 button styles*/
-	static lv_style_t style_btn_rel;
-	static lv_style_t style_btn_pr;
-	lv_style_copy(&style_btn_rel, &lv_style_btn_rel);
-	style_btn_rel.body.main_color = LV_COLOR_MAKE(0x30, 0x30, 0x30);
-	style_btn_rel.body.grad_color = LV_COLOR_BLACK;
-	style_btn_rel.body.border.color = LV_COLOR_SILVER;
-	style_btn_rel.body.border.width = 1;
-	style_btn_rel.body.border.opa = LV_OPA_50;
-	style_btn_rel.body.radius = 0;
+  /*Add a label to the button*/
+  label = lv_label_create(btn1, NULL);
+  lv_label_set_text(label, "Red");
 
-	lv_style_copy(&style_btn_pr, &style_btn_rel);
-	style_btn_pr.body.main_color = LV_COLOR_MAKE(0x55, 0x96, 0xd8);
-	style_btn_pr.body.grad_color = LV_COLOR_MAKE(0x37, 0x62, 0x90);
-	style_btn_pr.text.color = LV_COLOR_MAKE(0xbb, 0xd5, 0xf1);
+  /*Copy the button and set toggled state. (The release action is copied too)*/
+  lv_obj_t * btn2 = lv_btn_create(lv_scr_act(), btn1);
+  lv_obj_align(btn2, btn1, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
+  lv_obj_set_free_num(btn2, 2);               /*Set a unique number for the button*/
 
-	/*Create a second button matrix with the new styles*/
-	lv_obj_t * btnm2 = lv_btnm_create(lv_scr_act(), NULL);
-	lv_btnm_set_style(btnm2, LV_BTNM_STYLE_BG, &style_bg);
-	lv_btnm_set_style(btnm2, LV_BTNM_STYLE_BTN_REL, &style_btn_rel);
-	lv_btnm_set_style(btnm2, LV_BTNM_STYLE_BTN_PR, &style_btn_pr);
-  lv_btnm_set_map(btnm2, btnm_map);
-  lv_btnm_set_action(btnm2, btnm_action);
-  lv_obj_set_size(btnm2, LV_HOR_RES, LV_VER_RES);
+  /*Add a label to the toggled button*/
+  label = lv_label_create(btn2, NULL);
+  lv_label_set_text(label, "Blue");
+
+
+
+  /*Create a title label*/
+  lv_obj_t * label2 = lv_label_create(lv_scr_act(), NULL);
+  lv_label_set_text(label2, "Side");
+  lv_obj_align(label2, NULL, LV_ALIGN_IN_TOP_MID, 0, 5);
+
+  /*Create a normal button*/
+  lv_obj_t * btn3 = lv_btn_create(lv_scr_act(), NULL);
+  lv_cont_set_fit(btn3, true, true); /*Enable resizing horizontally and vertically*/
+  lv_obj_align(btn3, label2, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
+  lv_obj_set_free_num(btn3, 3);   /*Set a unique number for the button*/
+  lv_btn_set_action(btn3, LV_BTN_ACTION_CLICK, btn_click_action);
+
+  /*Add a label to the button*/
+  label = lv_label_create(btn3, NULL);
+  lv_label_set_text(label, "Front");
+
+  /*Copy the button and set toggled state. (The release action is copied too)*/
+  lv_obj_t * btn4 = lv_btn_create(lv_scr_act(), btn3);
+  lv_obj_align(btn4, btn3, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
+  lv_obj_set_free_num(btn4, 4);               /*Set a unique number for the button*/
+
+  /*Add a label to the toggled button*/
+  label = lv_label_create(btn4, NULL);
+  lv_label_set_text(label, "Back");
+
+
+
+
+  /*Create a title label*/
+  lv_obj_t * label3 = lv_label_create(lv_scr_act(), NULL);
+  lv_label_set_text(label3, "NUMBER");
+  lv_obj_align(label3, NULL, LV_ALIGN_IN_TOP_RIGHT, -50, 5);
+
+  /*Create a normal button*/
+  lv_obj_t * btn5 = lv_btn_create(lv_scr_act(), NULL);
+  lv_cont_set_fit(btn5, true, true); /*Enable resizing horizontally and vertically*/
+  lv_obj_align(btn5, label3, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
+  lv_obj_set_free_num(btn5, 5);   /*Set a unique number for the button*/
+  lv_btn_set_action(btn5, LV_BTN_ACTION_CLICK, btn_click_action);
+
+  /*Add a label to the button*/
+  label = lv_label_create(btn5, NULL);
+  lv_label_set_text(label, "1");
+
+  /*Copy the button and set toggled state. (The release action is copied too)*/
+  lv_obj_t * btn6 = lv_btn_create(lv_scr_act(), btn5);
+  lv_obj_align(btn6, btn5, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
+  lv_obj_set_free_num(btn6, 4);               /*Set a unique number for the button*/
+
+  /*Add a label to the toggled button*/
+  label = lv_label_create(btn6, NULL);
+  lv_label_set_text(label, "2");
 }
