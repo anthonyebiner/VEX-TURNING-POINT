@@ -4,7 +4,7 @@ Motor FrontLeftM(2, MOTOR_GEARSET_18, false, MOTOR_ENCODER_DEGREES);
 Motor BackRightM(3, MOTOR_GEARSET_36, true, MOTOR_ENCODER_DEGREES);
 Motor BackLeftM(4, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
 Motor IntakeM(5, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
-Motor LiftM(6, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
+Motor LiftM(6, MOTOR_GEARSET_18, false, MOTOR_ENCODER_DEGREES);
 Motor Flywheel1M(7, MOTOR_GEARSET_6, true, MOTOR_ENCODER_DEGREES);
 Motor Flywheel2M(8, MOTOR_GEARSET_6, false, MOTOR_ENCODER_DEGREES);
 
@@ -37,6 +37,7 @@ void initialize() {
 	FrontRightM.set_brake_mode(MOTOR_BRAKE_HOLD);
 	BackRightM.set_brake_mode(MOTOR_BRAKE_HOLD);
 	BackLeftM.set_brake_mode(MOTOR_BRAKE_HOLD);
+	initGraphics();
 }
 
 void disabled() {

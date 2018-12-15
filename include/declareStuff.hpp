@@ -31,6 +31,10 @@ extern int distanceSeperation;
 extern int highVelocities[];
 extern int midVelocities[];
 
+extern int autonColor;
+extern int autonSide;
+extern int autonNumber;
+
 extern int distanceToFlags();
 
 extern void moveForward();
@@ -48,4 +52,6 @@ extern void scoreCapLow();
 extern void scoreCapHigh();
 
 extern void resetPositions();
+
+extern void initGraphics();
 #endif
