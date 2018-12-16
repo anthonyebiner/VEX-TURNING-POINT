@@ -1,7 +1,16 @@
 #include "declareStuff.hpp"
 
  void redFrontAuton1(){
-
+   BackRightM.move_absolute(896.599976,60);
+   BackLeftM.move_absolute(901.400024,60);
+   while(fabs(BackRightM.get_position()-(896.599976))>5);
+   while(fabs(BackLeftM.get_position()-(901.400024))>5);
+   delay(400);
+   BackRightM.move_absolute(-60.599998,60);
+   BackLeftM.move_absolute(-67.599998,60);
+   while(fabs(BackRightM.get_position()-(-60.599998))>5);
+   while(fabs(BackLeftM.get_position()-(-67.599998))>5);
+   delay(400);
  }
 
  void redFrontAuton2(){

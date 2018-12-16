@@ -27,9 +27,9 @@ int distanceSeperation = 10; //inches
 int highVelocities [10] = {10,15,20,25,30,35,40,45,50,55}; //fill these in
 int midVelocities [10] = {5,10,15,20,25,30,35,40,45,50}; //fill these in
 
-int autonColor;
-int autonSide;
-int autonNumber;
+int autonColor=1;
+int autonSide=1;
+int autonNumber=1;
 
 void initialize() {
 	resetPositions();

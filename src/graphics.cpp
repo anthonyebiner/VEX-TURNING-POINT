@@ -4,28 +4,32 @@ static lv_res_t btn_click_action(lv_obj_t * btn)
 {
     uint8_t id = lv_obj_get_free_num(btn);
 
-    printf("Button %d is released\n", id);
-
     int autonColor;
     int autonSide;
     int autonNumber;
 
     if(id == 1){
+      MasterC.clear();
       MasterC.print(0,0,"RED",NULL);
       autonColor = 1;
     }else if(id == 2){
+      MasterC.clear();
       MasterC.print(0,0,"BLUE",NULL);
       autonColor = 2;
     }else if(id == 3){
+      MasterC.clear();
       MasterC.print(0,0,"FRONT",NULL);
       autonSide = 1;
     }else if(id == 4){
+      MasterC.clear();
       MasterC.print(0,0,"BACK",NULL);
       autonSide = 2;
     }else if(id == 5){
+      MasterC.clear();
       MasterC.print(0,0,"1",NULL);
       autonNumber = 1;
     }else if(id == 6){
+      MasterC.clear();
       MasterC.print(0,0,"2",NULL);
       autonNumber = 2;
     }
