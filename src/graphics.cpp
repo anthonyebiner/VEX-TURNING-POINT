@@ -6,6 +6,10 @@ static lv_res_t btn_click_action(lv_obj_t * btn)
 
     printf("Button %d is released\n", id);
 
+    int autonColor;
+    int autonSide;
+    int autonNumber;
+
     if(id == 1){
       MasterC.print(0,0,"RED",NULL);
       autonColor = 1;
@@ -105,7 +109,7 @@ void initGraphics() {
   /*Copy the button and set toggled state. (The release action is copied too)*/
   lv_obj_t * btn6 = lv_btn_create(lv_scr_act(), btn5);
   lv_obj_align(btn6, btn5, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
-  lv_obj_set_free_num(btn6, 4);               /*Set a unique number for the button*/
+  lv_obj_set_free_num(btn6, 6);               /*Set a unique number for the button*/
 
   /*Add a label to the toggled button*/
   label = lv_label_create(btn6, NULL);

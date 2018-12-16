@@ -75,12 +75,13 @@ void opcontrol() {
   			IntakeM.move(0);
   		}
 
+
       if(MasterC.get_digital(DIGITAL_R2)){
         scoreCapLow();
       }else if(MasterC.get_digital(DIGITAL_R1)){
         scoreCapHigh();
       }else{
-        LiftM.move(ANALOG_RIGHT_Y);
+        LiftM.move(MasterC.get_analog(ANALOG_RIGHT_Y));
       }
 
       int power = MasterC.get_analog(ANALOG_LEFT_Y);

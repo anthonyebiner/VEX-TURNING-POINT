@@ -16,6 +16,9 @@ extern Vision VisionSensor;
 extern Controller MasterC;
 extern Controller PartnerC;
 extern bool control;
+extern int autonColor;
+extern int autonSide;
+extern int autonNumber;
 
 extern int frontWheelDiameter;
 extern int backWheelDiameter;
@@ -30,10 +33,6 @@ extern int kp;
 extern int distanceSeperation;
 extern int highVelocities[];
 extern int midVelocities[];
-
-extern int autonColor;
-extern int autonSide;
-extern int autonNumber;
 
 extern int distanceToFlags();
 

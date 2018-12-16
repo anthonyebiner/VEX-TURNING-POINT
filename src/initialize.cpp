@@ -27,6 +27,10 @@ int distanceSeperation = 10; //inches
 int highVelocities [10] = {10,15,20,25,30,35,40,45,50,55}; //fill these in
 int midVelocities [10] = {5,10,15,20,25,30,35,40,45,50}; //fill these in
 
+int autonColor;
+int autonSide;
+int autonNumber;
+
 void initialize() {
 	resetPositions();
 	Flywheel1M.set_brake_mode(MOTOR_BRAKE_COAST);
