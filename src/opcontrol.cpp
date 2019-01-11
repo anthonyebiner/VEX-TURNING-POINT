@@ -68,6 +68,20 @@ void record(void* param){
   recording = false; //recording has ended
 }
 
+
+void decelerate(void* param){
+  int sped = Flywheel1M.get_actual_velocity();
+  while(MasterC.get_digital(DIGITAL_L1)){
+    Flywheel1M.move_velocity(sped);
+    Flywheel2M.move_velocity(sped);
+    sped -= 5;
+    if(sped < -50){
+      sped = -50;
+    }
+    delay(5);
+  }
+}
+
 //starts user control
 void opcontrol() {
 
@@ -75,21 +89,19 @@ void opcontrol() {
     if(control){
     	if(MasterC.get_digital(DIGITAL_L1)){
     		IntakeM.move(-127);
+        if(!DIGITAL_A){
+          Task decelerateTask (decelerate, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
+        }
   		}else if(MasterC.get_digital(DIGITAL_L2)){
   			IntakeM.move(127);
   		}else{
   			IntakeM.move(0);
   		}
 
-
-      if(MasterC.get_digital(DIGITAL_R2)){
-        scoreCapLow();
-      }else if(MasterC.get_digital(DIGITAL_R1)){
-        scoreCapHigh();
-      }else if(abs(MasterC.get_analog(ANALOG_RIGHT_Y))<15){
+      if(abs(MasterC.get_analog(ANALOG_RIGHT_Y))<15){
         LiftM.move_velocity(0);
       }else{
-        LiftM.move(-MasterC.get_analog(ANALOG_RIGHT_Y));
+        LiftM.move(MasterC.get_analog(ANALOG_RIGHT_Y));
       }
 
       int power = MasterC.get_analog(ANALOG_LEFT_Y);
@@ -143,6 +155,7 @@ void opcontrol() {
       MasterC.rumble("-");
     }
 
+    /*
     if(MasterC.get_digital(DIGITAL_UP) && !recording && !competition::is_connected()){
       while(MasterC.get_digital(DIGITAL_UP)){};
       Task recordTask (record, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
@@ -166,6 +179,7 @@ void opcontrol() {
           printf("delay(400);\n");
       }
     }
+    */
     delay(5);
   }
 }

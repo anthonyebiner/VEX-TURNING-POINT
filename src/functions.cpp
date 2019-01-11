@@ -143,9 +143,7 @@ void shootMid(){
 }
 
 void shootDefault(){
-  control = false;
   shootBall(velocity);
-  control = true;
 }
 
 void scoreCapLow(){
