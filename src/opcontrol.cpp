@@ -19,7 +19,7 @@ Purpose:						Competition code for 6526D
 */
 #include "declareStuff.hpp"
 
-int velocity = -525;
+int velocity = -500;
 bool control = true;
 
 int adjust = 1; //number divided by motor power in order to keep recording at a managable speed
@@ -44,6 +44,7 @@ void record(void* param){
   while(!MasterC.get_digital(DIGITAL_UP)){ //exit position saver when user presses down
     if(MasterC.get_digital(DIGITAL_DOWN)){ //saves positions
       control = false;
+      MasterC.rumble(".");
       //motorPosTemp[positionsTemp][0] = FrontRightM.get_position();
       //motorPosTemp[positionsTemp][1] = FrontLeftM.get_position();
       motorPosTemp[positionsTemp][2] = BackRightM.get_position();
@@ -63,6 +64,7 @@ void record(void* param){
   while(MasterC.get_digital(DIGITAL_DOWN)){delay(5);} //wait until down is released
   while(MasterC.get_digital(DIGITAL_UP)){delay(5);} //wait until up is released
   adjust = 1; //return drive to normal speed
+  MasterC.rumble("-");
   recording = false; //recording has ended
 }
 
@@ -72,9 +74,9 @@ void opcontrol() {
   while(true){
     if(control){
     	if(MasterC.get_digital(DIGITAL_L1)){
-    		IntakeM.move(127);
+    		IntakeM.move(-127);
   		}else if(MasterC.get_digital(DIGITAL_L2)){
-  			IntakeM.move(-127);
+  			IntakeM.move(127);
   		}else{
   			IntakeM.move(0);
   		}
@@ -84,10 +86,10 @@ void opcontrol() {
         scoreCapLow();
       }else if(MasterC.get_digital(DIGITAL_R1)){
         scoreCapHigh();
-      }else if(fabs(MasterC.get_analog(ANALOG_RIGHT_Y))<25){
+      }else if(abs(MasterC.get_analog(ANALOG_RIGHT_Y))<15){
         LiftM.move_velocity(0);
       }else{
-        LiftM.move(MasterC.get_analog(ANALOG_RIGHT_Y)/2);
+        LiftM.move(-MasterC.get_analog(ANALOG_RIGHT_Y));
       }
 
       int power = MasterC.get_analog(ANALOG_LEFT_Y);
@@ -128,6 +130,9 @@ void opcontrol() {
       }else if(MasterC.get_digital(DIGITAL_B)){
         //shootMid();
         while(MasterC.get_digital(DIGITAL_B)){delay(5);}
+      }else if(MasterC.get_digital(DIGITAL_Y)){
+        shootDefault();
+        while(MasterC.get_digital(DIGITAL_Y)){delay(5);}
       }else{
         Flywheel1M.move(0);
         Flywheel2M.move(0);

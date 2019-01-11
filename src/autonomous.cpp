@@ -10,7 +10,6 @@
    BackLeftM.move_absolute(-67.599998,60);
    while(fabs(BackRightM.get_position()-(-60.599998))>5);
    while(fabs(BackLeftM.get_position()-(-67.599998))>5);
-   delay(400);
  }
 
  void redFrontAuton2(){

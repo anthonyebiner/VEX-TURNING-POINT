@@ -34,6 +34,8 @@ extern int distanceSeperation;
 extern int highVelocities[];
 extern int midVelocities[];
 
+extern int velocity;
+
 extern int distanceToFlags();
 
 extern void moveForward();
@@ -41,7 +43,6 @@ extern void moveBackward();
 extern void turnLeft();
 extern void turnRight();
 
-extern void shootBall();
 extern void alignBack();
 extern void alignFront();
 extern void centerShot();
@@ -49,6 +50,7 @@ extern void shootHigh();
 extern void shootMid();
 extern void scoreCapLow();
 extern void scoreCapHigh();
+extern void shootDefault();
 
 extern void resetPositions();
 

@@ -64,26 +64,31 @@ void turnRight(int degrees, int velocity){
 }
 
 void shootBall(float targetVelocity){
+  MasterC.rumble("-");
   Flywheel1M.move_velocity(targetVelocity);
   Flywheel2M.move_velocity(targetVelocity);
-  while(Flywheel1M.get_actual_velocity() - targetVelocity > 1 && Flywheel2M.get_actual_velocity() - targetVelocity > 1){
-    if(!MasterC.get_digital(DIGITAL_X) && !MasterC.get_digital(DIGITAL_B) && !MasterC.get_digital(DIGITAL_A)){
+  while(fabs(Flywheel1M.get_actual_velocity() - targetVelocity) > 3){
+    if(!MasterC.get_digital(DIGITAL_X) && !MasterC.get_digital(DIGITAL_B) && !MasterC.get_digital(DIGITAL_A) && !MasterC.get_digital(DIGITAL_Y)){
       control = true;
       return;
     }
     delay(5);
   }
-  IntakeM.move(100);
-  while(Flywheel1M.get_actual_velocity() - targetVelocity < 1 && Flywheel2M.get_actual_velocity() - targetVelocity < 1){
-    if(!MasterC.get_digital(DIGITAL_X) && !MasterC.get_digital(DIGITAL_B) && !MasterC.get_digital(DIGITAL_A)){
+  IntakeM.move(-100);
+  delay(250);
+  while(fabs(Flywheel1M.get_actual_velocity() - targetVelocity) < 50){
+    if(!MasterC.get_digital(DIGITAL_X) && !MasterC.get_digital(DIGITAL_B) && !MasterC.get_digital(DIGITAL_A) && !MasterC.get_digital(DIGITAL_Y)){
       control = true;
       IntakeM.move(0);
       return;
     }
     delay(5);
   }
-  delay(250);
+  delay(500);
   IntakeM.move(0);
+  Flywheel1M.move_velocity(0);
+  Flywheel2M.move_velocity(0);
+  MasterC.rumble("-");
 }
 
 void alignBack(){
@@ -134,6 +139,12 @@ void shootMid(){
   control = false;
   centerShot();
   shootBall(velocityMid());
+  control = true;
+}
+
+void shootDefault(){
+  control = false;
+  shootBall(velocity);
   control = true;
 }
 
