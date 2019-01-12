@@ -31,6 +31,8 @@ int autonColor=1;
 int autonSide=1;
 int autonNumber=1;
 
+bool autonRunning = false;
+
 void initialize() {
 	resetPositions();
 	Flywheel1M.set_brake_mode(MOTOR_BRAKE_COAST);

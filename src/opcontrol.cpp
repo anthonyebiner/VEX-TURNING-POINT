@@ -68,18 +68,20 @@ void record(void* param){
   recording = false; //recording has ended
 }
 
-
+bool decelerating;
 void decelerate(void* param){
+  decelerating = true;
   int sped = Flywheel1M.get_actual_velocity();
   while(MasterC.get_digital(DIGITAL_L1)){
+    sped += 5;
+    if(sped > 50){
+      sped = 55;
+    }
     Flywheel1M.move_velocity(sped);
     Flywheel2M.move_velocity(sped);
-    sped -= 5;
-    if(sped < -50){
-      sped = -50;
-    }
     delay(5);
   }
+  decelerating = false;
 }
 
 //starts user control
@@ -89,9 +91,6 @@ void opcontrol() {
     if(control){
     	if(MasterC.get_digital(DIGITAL_L1)){
     		IntakeM.move(-127);
-        if(!DIGITAL_A){
-          Task decelerateTask (decelerate, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
-        }
   		}else if(MasterC.get_digital(DIGITAL_L2)){
   			IntakeM.move(127);
   		}else{
@@ -121,6 +120,7 @@ void opcontrol() {
    		BackLeftM.move(left/adjust);
    		BackRightM.move(right/adjust);
 
+/*
       if(MasterC.get_digital(DIGITAL_R1)){
         velocity = velocity - 10;
         while(MasterC.get_digital(DIGITAL_R1)){}
@@ -131,7 +131,7 @@ void opcontrol() {
         while(MasterC.get_digital(DIGITAL_R2)){}
         MasterC.clear();
         MasterC.print(0, 0, "target: %d", abs(velocity));
-      }
+      }*/
 
       if(MasterC.get_digital(DIGITAL_A)){
         Flywheel1M.move_velocity(velocity);
@@ -145,7 +145,9 @@ void opcontrol() {
       }else if(MasterC.get_digital(DIGITAL_Y)){
         shootDefault();
         while(MasterC.get_digital(DIGITAL_Y)){delay(5);}
-      }else{
+      }else if(MasterC.get_digital(DIGITAL_L1) && !decelerating){
+        Task decelerateTask (decelerate, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
+      }else if(!decelerating){
         Flywheel1M.move(0);
         Flywheel2M.move(0);
       }

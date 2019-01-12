@@ -68,7 +68,7 @@ void shootBall(float targetVelocity){
   Flywheel1M.move_velocity(targetVelocity);
   Flywheel2M.move_velocity(targetVelocity);
   while(fabs(Flywheel1M.get_actual_velocity() - targetVelocity) > 3){
-    if(!MasterC.get_digital(DIGITAL_X) && !MasterC.get_digital(DIGITAL_B) && !MasterC.get_digital(DIGITAL_A) && !MasterC.get_digital(DIGITAL_Y)){
+    if(!MasterC.get_digital(DIGITAL_X) && !MasterC.get_digital(DIGITAL_B) && !MasterC.get_digital(DIGITAL_A) && !MasterC.get_digital(DIGITAL_Y) && !autonRunning){
       control = true;
       return;
     }
@@ -77,7 +77,7 @@ void shootBall(float targetVelocity){
   IntakeM.move(-100);
   delay(250);
   while(fabs(Flywheel1M.get_actual_velocity() - targetVelocity) < 50){
-    if(!MasterC.get_digital(DIGITAL_X) && !MasterC.get_digital(DIGITAL_B) && !MasterC.get_digital(DIGITAL_A) && !MasterC.get_digital(DIGITAL_Y)){
+    if(!MasterC.get_digital(DIGITAL_X) && !MasterC.get_digital(DIGITAL_B) && !MasterC.get_digital(DIGITAL_A) && !MasterC.get_digital(DIGITAL_Y) && !autonRunning){
       control = true;
       IntakeM.move(0);
       return;
@@ -144,6 +144,10 @@ void shootMid(){
 
 void shootDefault(){
   shootBall(velocity);
+}
+
+void shootBackAuton(){
+  shootBall(-450);
 }
 
 void scoreCapLow(){

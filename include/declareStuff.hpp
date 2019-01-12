@@ -16,6 +16,7 @@ extern Vision VisionSensor;
 extern Controller MasterC;
 extern Controller PartnerC;
 extern bool control;
+extern bool autonRunning;
 extern int autonColor;
 extern int autonSide;
 extern int autonNumber;
@@ -51,6 +52,7 @@ extern void shootMid();
 extern void scoreCapLow();
 extern void scoreCapHigh();
 extern void shootDefault();
+extern void shootBackAuton();
 
 extern void resetPositions();
 
