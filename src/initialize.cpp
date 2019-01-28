@@ -43,6 +43,14 @@ void initialize() {
 	FrontRightM.set_brake_mode(MOTOR_BRAKE_HOLD);
 	BackRightM.set_brake_mode(MOTOR_BRAKE_HOLD);
 	BackLeftM.set_brake_mode(MOTOR_BRAKE_HOLD);
+
+	VisionSensor.set_signature(1, &RED);
+	VisionSensor.set_signature(2, &BLUE);
+	VisionSensor.set_signature(3, &GREEN);
+
+	vision_color_code_t redFlag = VisionSensor.create_color_code(1, 3);
+	vision_color_code_t blueFlag = VisionSensor.create_color_code(2, 3);
+
 	initGraphics();
 }
 

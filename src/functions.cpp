@@ -13,7 +13,7 @@ float distanceToDegreesBack(int distance){
 }
 
 int distanceToFlags(){
-  vision_object_s_t flag = VisionSensor.get_by_sig(0, 1);
+  vision_object_s_t flag = VisionSensor.get_by_code(0,redFlag);
   delay(200);
   return flag.height; //test -- remove later
   //return ((midFlagHeight)/(tanf(FOV/360*3.14159-atan((1-(2*(FOV-flag.top_coord-flag.height))/VISION_FOV_HEIGHT)*tanf(FOV/360*3.14159)))));
