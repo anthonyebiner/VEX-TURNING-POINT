@@ -12,10 +12,10 @@ extern Motor Flywheel1M;
 extern Motor Flywheel2M;
 
 extern Vision VisionSensor;
-vision_signature_s_t RED_SIG = {1, {255, 255, 255}, 8103, 8763, 8432, -361, 353, -4, 9, 0};
+vision_signature_s_t REDFLAG = {1, {255, 255, 255}, 8103, 8763, 8432, -361, 353, -4, 9, 0};
 vision_signature_s_t BLUEFLAG = {2, {255, 255, 255}, -2979, -2465, -2722, 9615, 10923, 10268, 9, 0};
 
-extern Controller MasterC;
+extern Controller MasterC;  
 extern Controller PartnerC;
 extern bool control;
 extern bool autonRunning;

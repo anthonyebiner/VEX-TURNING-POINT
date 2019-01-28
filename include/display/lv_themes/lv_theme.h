@@ -213,7 +213,6 @@ typedef struct {
   } tabview;
 #endif
 
-
 #if USE_LV_WIN != 0
   struct {
     lv_style_t *bg;
