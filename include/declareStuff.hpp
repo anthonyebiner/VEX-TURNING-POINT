@@ -12,6 +12,8 @@ extern Motor Flywheel1M;
 extern Motor Flywheel2M;
 
 extern Vision VisionSensor;
+vision_signature_s_t RED_SIG = {1, {255, 255, 255}, 8103, 8763, 8432, -361, 353, -4, 9, 0};
+vision_signature_s_t BLUEFLAG = {2, {255, 255, 255}, -2979, -2465, -2722, 9615, 10923, 10268, 9, 0};
 
 extern Controller MasterC;
 extern Controller PartnerC;
@@ -39,10 +41,10 @@ extern int velocity;
 
 extern int distanceToFlags();
 
-extern void moveForward();
-extern void moveBackward();
-extern void turnLeft();
-extern void turnRight();
+extern void moveForward(int distance, int velocity);
+extern void moveBackward(int distance, int velocity);
+extern void turnLeft(int degrees, int velocity);
+extern void turnRight(int degrees, int velocity);
 
 extern void alignBack();
 extern void alignFront();
@@ -52,7 +54,8 @@ extern void shootMid();
 extern void scoreCapLow();
 extern void scoreCapHigh();
 extern void shootDefault();
-extern void shootBackAuton();
+
+void shootBall(float targetVelocity);
 
 extern void resetPositions();
 

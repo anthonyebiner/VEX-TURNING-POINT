@@ -53,7 +53,6 @@
      blueBackAuton2();
    }
    */
-
-   shootBackAuton();
+   shootBall(-450.0);
    autonRunning = false;
  }

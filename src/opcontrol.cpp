@@ -19,12 +19,12 @@ Purpose:						Competition code for 6526D
 */
 #include "declareStuff.hpp"
 
-int velocity = -500;
+int velocity = -550;
 bool control = true;
 
 int adjust = 1; //number divided by motor power in order to keep recording at a managable speed
 bool recording = false; //are we recording
-
+/*
 int positionsTemp;
 float motorPosTemp [100][10];
 
@@ -67,15 +67,16 @@ void record(void* param){
   MasterC.rumble("-");
   recording = false; //recording has ended
 }
+*/
 
 bool decelerating;
 void decelerate(void* param){
   decelerating = true;
   int sped = Flywheel1M.get_actual_velocity();
   while(MasterC.get_digital(DIGITAL_L1)){
-    sped += 5;
+    sped += 3;
     if(sped > 50){
-      sped = 55;
+      sped = 50;
     }
     Flywheel1M.move_velocity(sped);
     Flywheel2M.move_velocity(sped);
@@ -86,7 +87,6 @@ void decelerate(void* param){
 
 //starts user control
 void opcontrol() {
-
   while(true){
     if(control){
     	if(MasterC.get_digital(DIGITAL_L1)){
@@ -97,11 +97,13 @@ void opcontrol() {
   			IntakeM.move(0);
   		}
 
+
       if(abs(MasterC.get_analog(ANALOG_RIGHT_Y))<15){
         LiftM.move_velocity(0);
       }else{
         LiftM.move(MasterC.get_analog(ANALOG_RIGHT_Y));
       }
+
 
       int power = MasterC.get_analog(ANALOG_LEFT_Y);
       int turn = MasterC.get_analog(ANALOG_LEFT_X);
@@ -120,31 +122,10 @@ void opcontrol() {
    		BackLeftM.move(left/adjust);
    		BackRightM.move(right/adjust);
 
-/*
-      if(MasterC.get_digital(DIGITAL_R1)){
-        velocity = velocity - 10;
-        while(MasterC.get_digital(DIGITAL_R1)){}
-        MasterC.clear();
-        MasterC.print(0, 0, "target: %d", abs(velocity));
-      }else if(MasterC.get_digital(DIGITAL_R2)){
-        velocity = velocity + 10;
-        while(MasterC.get_digital(DIGITAL_R2)){}
-        MasterC.clear();
-        MasterC.print(0, 0, "target: %d", abs(velocity));
-      }*/
 
       if(MasterC.get_digital(DIGITAL_A)){
         Flywheel1M.move_velocity(velocity);
         Flywheel2M.move_velocity(velocity);
-      }else if(MasterC.get_digital(DIGITAL_X)){
-        //shootHigh();
-        while(MasterC.get_digital(DIGITAL_X)){delay(5);}
-      }else if(MasterC.get_digital(DIGITAL_B)){
-        //shootMid();
-        while(MasterC.get_digital(DIGITAL_B)){delay(5);}
-      }else if(MasterC.get_digital(DIGITAL_Y)){
-        shootDefault();
-        while(MasterC.get_digital(DIGITAL_Y)){delay(5);}
       }else if(MasterC.get_digital(DIGITAL_L1) && !decelerating){
         Task decelerateTask (decelerate, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
       }else if(!decelerating){
