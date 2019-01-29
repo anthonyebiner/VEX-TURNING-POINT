@@ -13,8 +13,8 @@ Vision VisionSensor(9);
 Controller MasterC(CONTROLLER_MASTER);
 Controller PartnerC(CONTROLLER_PARTNER);
 
-int frontWheelDiameter = 6;
-int backWheelDiameter = 8;
+int frontWheelDiameter = 4;
+int backWheelDiameter = 6;
 
 int midFlagHeight = 28;
 int visionHeight = 11;

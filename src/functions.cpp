@@ -60,16 +60,16 @@ void moveBackward(int distance, int velocity){
 void turnLeft(float turn, int velocity){
   FrontRightM.move_relative(turn*1200,velocity);
   FrontLeftM.move_relative(turn*-1600,velocity);
-  BackLeftM.move_relative(turn*-1225,velocity);
   BackRightM.move_relative(turn*1525,velocity);
+  BackLeftM.move_relative(turn*-1225,velocity);
   while(BackRightM.is_stopped()==0||BackLeftM.is_stopped()==0||FrontRightM.is_stopped()==0||FrontLeftM.is_stopped()==0){}
 }
 
 void turnRight(float turn, int svelocity){
   FrontRightM.move_relative(turn*-1075,velocity);
   FrontLeftM.move_relative(turn*1550,velocity);
-  BackLeftM.move_relative(turn*1175,velocity);
   BackRightM.move_relative(turn*-1400,velocity);
+  BackLeftM.move_relative(turn*1175,velocity);
   while(BackRightM.is_stopped()==0||BackLeftM.is_stopped()==0||FrontRightM.is_stopped()==0||FrontLeftM.is_stopped()==0){}
 }
 
