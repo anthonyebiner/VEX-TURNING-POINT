@@ -53,7 +53,7 @@ void initGraphics() {
 
   /*Add a label to the button*/
   label = lv_label_create(btn1, NULL);
-  lv_label_set_text(label, "Red");
+  lv_label_set_text(label, "Red-");
 
   /*Copy the button and set toggled state. (The release action is copied too)*/
   lv_obj_t * btn2 = lv_btn_create(lv_scr_act(), btn1);
@@ -62,7 +62,7 @@ void initGraphics() {
 
   /*Add a label to the toggled button*/
   label = lv_label_create(btn2, NULL);
-  lv_label_set_text(label, "Blue");
+  lv_label_set_text(label, "Blue-");
 
 
 

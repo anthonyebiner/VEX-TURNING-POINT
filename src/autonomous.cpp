@@ -53,6 +53,9 @@
      blueBackAuton2();
    }
    */
-   shootBall(-450.0);
+   shootBall(-400.0);
+   turnLeft(.17,100);
+   moveForward(15,75);
+   while(true){}
    autonRunning = false;
  }

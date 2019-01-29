@@ -19,7 +19,7 @@ Purpose:						Competition code for 6526D
 */
 #include "declareStuff.hpp"
 
-int velocity = -550;
+int velocity = -525;
 bool control = true;
 
 int adjust = 1; //number divided by motor power in order to keep recording at a managable speed
@@ -136,6 +136,20 @@ void opcontrol() {
 
     if(abs(velocity) - fabs(Flywheel1M.get_actual_velocity()) < 5){
       MasterC.rumble("-");
+    }
+
+    if(MasterC.get_digital(DIGITAL_UP)){
+      FrontRightM.move(-100);
+   		FrontLeftM.move(100);
+   		BackLeftM.move(100);
+   		BackRightM.move(-100);
+    }
+
+    if(MasterC.get_digital(DIGITAL_DOWN)){
+      printf("FrontRightM %f\n", FrontRightM.get_position());
+      printf("FrontLeftM %f\n", FrontLeftM.get_position());
+      printf("BackRightM %f\n", BackRightM.get_position());
+      printf("BackLeftM %f\n", BackLeftM.get_position());
     }
 
     /*

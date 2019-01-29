@@ -12,9 +12,9 @@ extern Motor Flywheel1M;
 extern Motor Flywheel2M;
 
 extern Vision VisionSensor;
-vision_signature_s_t RED = Vision::signature_from_utility(1, 8103, 8763, 8432, -361, 353, -4, 9, 0);
-vision_signature_s_t BLUE = Vision::signature_from_utility(2, -2979, -2465, -2722, 9615, 10923, 10268, 9, 0);
-vision_signature_s_t GREEN = Vision::signature_from_utility(3, -2979, -2465, -2722, 9615, 10923, 10268, 9, 0); //update later
+extern vision_signature_s_t Red;
+extern vision_signature_s_t Blue;
+extern vision_signature_s_t Green;
 extern vision_color_code_t redFlag;
 extern vision_color_code_t blueFlag;
 
@@ -46,8 +46,8 @@ extern int distanceToFlags();
 
 extern void moveForward(int distance, int velocity);
 extern void moveBackward(int distance, int velocity);
-extern void turnLeft(int degrees, int velocity);
-extern void turnRight(int degrees, int velocity);
+extern void turnLeft(float turn, int velocity);
+extern void turnRight(float turn, int velocity);
 
 extern void alignBack();
 extern void alignFront();

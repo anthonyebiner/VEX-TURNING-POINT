@@ -46,6 +46,7 @@ void moveForward(int distance, int velocity){
   FrontLeftM.move_relative(distanceToDegreesFront(distance), velocity);
   BackRightM.move_relative(distanceToDegreesBack(distance), velocity);
   BackLeftM.move_relative(distanceToDegreesBack(distance), velocity);
+  while(BackRightM.is_stopped()==0||BackLeftM.is_stopped()==0||FrontRightM.is_stopped()==0||FrontLeftM.is_stopped()==0){}
 }
 
 void moveBackward(int distance, int velocity){
@@ -53,14 +54,23 @@ void moveBackward(int distance, int velocity){
   FrontLeftM.move_relative(-distanceToDegreesFront(distance), velocity);
   BackRightM.move_relative(-distanceToDegreesBack(distance), velocity);
   BackLeftM.move_relative(-distanceToDegreesBack(distance), velocity);
+  while(BackRightM.is_stopped()==0||BackLeftM.is_stopped()==0||FrontRightM.is_stopped()==0||FrontLeftM.is_stopped()==0){}
 }
 
-void turnLeft(int degrees, int velocity){
-
+void turnLeft(float turn, int velocity){
+  FrontRightM.move_relative(turn*1200,velocity);
+  FrontLeftM.move_relative(turn*-1600,velocity);
+  BackLeftM.move_relative(turn*-1225,velocity);
+  BackRightM.move_relative(turn*1525,velocity);
+  while(BackRightM.is_stopped()==0||BackLeftM.is_stopped()==0||FrontRightM.is_stopped()==0||FrontLeftM.is_stopped()==0){}
 }
 
-void turnRight(int degrees, int velocity){
-
+void turnRight(float turn, int svelocity){
+  FrontRightM.move_relative(turn*-1075,velocity);
+  FrontLeftM.move_relative(turn*1550,velocity);
+  BackLeftM.move_relative(turn*1175,velocity);
+  BackRightM.move_relative(turn*-1400,velocity);
+  while(BackRightM.is_stopped()==0||BackLeftM.is_stopped()==0||FrontRightM.is_stopped()==0||FrontLeftM.is_stopped()==0){}
 }
 
 void shootBall(float targetVelocity){
