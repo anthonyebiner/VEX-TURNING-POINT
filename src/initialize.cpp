@@ -13,8 +13,8 @@ Vision VisionSensor(9);
 Controller MasterC(CONTROLLER_MASTER);
 Controller PartnerC(CONTROLLER_PARTNER);
 
-int frontWheelDiameter = 4;
-int backWheelDiameter = 6;
+float frontWheelDiameter = 4;
+float backWheelDiameter = 5.5;
 
 int midFlagHeight = 28;
 int visionHeight = 11;
@@ -43,8 +43,8 @@ void initialize() {
 	Flywheel2M.set_brake_mode(MOTOR_BRAKE_COAST);
 	IntakeM.set_brake_mode(MOTOR_BRAKE_BRAKE);
 	LiftM.set_brake_mode(MOTOR_BRAKE_HOLD);
-	FrontLeftM.set_brake_mode(MOTOR_BRAKE_HOLD);
-	FrontRightM.set_brake_mode(MOTOR_BRAKE_HOLD);
+	FrontLeftM.set_brake_mode(MOTOR_BRAKE_COAST);
+	FrontRightM.set_brake_mode(MOTOR_BRAKE_COAST);
 	BackRightM.set_brake_mode(MOTOR_BRAKE_HOLD);
 	BackLeftM.set_brake_mode(MOTOR_BRAKE_HOLD);
 

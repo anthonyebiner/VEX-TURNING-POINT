@@ -42,19 +42,17 @@ float velocityMid(){
 
 
 void moveForward(int distance, int velocity){
-  FrontRightM.move_relative(distanceToDegreesFront(distance), velocity);
-  FrontLeftM.move_relative(distanceToDegreesFront(distance), velocity);
+  FrontRightM.move(0);
+  FrontLeftM.move(0);
   BackRightM.move_relative(distanceToDegreesBack(distance), velocity);
   BackLeftM.move_relative(distanceToDegreesBack(distance), velocity);
-  while(BackRightM.is_stopped()==0||BackLeftM.is_stopped()==0||FrontRightM.is_stopped()==0||FrontLeftM.is_stopped()==0){}
 }
 
 void moveBackward(int distance, int velocity){
-  FrontRightM.move_relative(-distanceToDegreesFront(distance), velocity);
-  FrontLeftM.move_relative(-distanceToDegreesFront(distance), velocity);
+  FrontRightM.move(0);
+  FrontLeftM.move(0);
   BackRightM.move_relative(-distanceToDegreesBack(distance), velocity);
   BackLeftM.move_relative(-distanceToDegreesBack(distance), velocity);
-  while(BackRightM.is_stopped()==0||BackLeftM.is_stopped()==0||FrontRightM.is_stopped()==0||FrontLeftM.is_stopped()==0){}
 }
 
 void turnLeft(float turn, int velocity){
@@ -62,7 +60,6 @@ void turnLeft(float turn, int velocity){
   FrontLeftM.move_relative(turn*-1600,velocity);
   BackRightM.move_relative(turn*1525,velocity);
   BackLeftM.move_relative(turn*-1225,velocity);
-  while(BackRightM.is_stopped()==0||BackLeftM.is_stopped()==0||FrontRightM.is_stopped()==0||FrontLeftM.is_stopped()==0){}
 }
 
 void turnRight(float turn, int svelocity){
@@ -70,6 +67,9 @@ void turnRight(float turn, int svelocity){
   FrontLeftM.move_relative(turn*1550,velocity);
   BackRightM.move_relative(turn*-1400,velocity);
   BackLeftM.move_relative(turn*1175,velocity);
+}
+
+void waitUntilSettled(){
   while(BackRightM.is_stopped()==0||BackLeftM.is_stopped()==0||FrontRightM.is_stopped()==0||FrontLeftM.is_stopped()==0){}
 }
 

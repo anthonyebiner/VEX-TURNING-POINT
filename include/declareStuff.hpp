@@ -26,12 +26,11 @@ extern int autonColor;
 extern int autonSide;
 extern int autonNumber;
 
-extern int frontWheelDiameter;
-extern int backWheelDiameter;
+extern float frontWheelDiameter;
+extern float backWheelDiameter;
 
 extern int midFlagHeight;
 extern int visionHeight;
-extern int FOV;
 
 extern int centerShotTolerance;
 extern int kp;
@@ -57,6 +56,7 @@ extern void shootMid();
 extern void scoreCapLow();
 extern void scoreCapHigh();
 extern void shootDefault();
+extern void waitUntilSettled();
 
 void shootBall(float targetVelocity);
 

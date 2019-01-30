@@ -24,9 +24,9 @@ bool control = true;
 
 int adjust = 1; //number divided by motor power in order to keep recording at a managable speed
 bool recording = false; //are we recording
-/*
+
 int positionsTemp;
-float motorPosTemp [100][10];
+float motorPosTemp [100][4];
 
 void record(void* param){
   MasterC.rumble("-");
@@ -36,7 +36,7 @@ void record(void* param){
   adjust = 4; //slow down drive
 
   positionsTemp = 0; //clear number of positions
-  motorPosTemp [99][9] = {}; //clear saved motor positions
+  motorPosTemp [99][3] = {}; //clear saved motor positions
 
   resetPositions(); //reset absolute motor positions
 
@@ -45,12 +45,10 @@ void record(void* param){
     if(MasterC.get_digital(DIGITAL_DOWN)){ //saves positions
       control = false;
       MasterC.rumble(".");
-      //motorPosTemp[positionsTemp][0] = FrontRightM.get_position();
-      //motorPosTemp[positionsTemp][1] = FrontLeftM.get_position();
+      motorPosTemp[positionsTemp][0] = FrontRightM.get_position();
+      motorPosTemp[positionsTemp][1] = FrontLeftM.get_position();
       motorPosTemp[positionsTemp][2] = BackRightM.get_position();
       motorPosTemp[positionsTemp][3] = BackLeftM.get_position();
-      //motorPosTemp[positionsTemp][4] = IntakeM.get_position();
-      //motorPosTemp[positionsTemp][5] = LiftM.get_position();
       MasterC.clear();
       MasterC.print(0, 0, "positions: %d", motorPosTemp[positionsTemp][0]);
       positionsTemp++; //say that we now have one more position
@@ -67,7 +65,7 @@ void record(void* param){
   MasterC.rumble("-");
   recording = false; //recording has ended
 }
-*/
+
 
 bool decelerating;
 void decelerate(void* param){
@@ -138,21 +136,7 @@ void opcontrol() {
       MasterC.rumble("-");
     }
 
-    if(MasterC.get_digital(DIGITAL_UP)){
-      FrontRightM.move(-100);
-   		FrontLeftM.move(100);
-   		BackLeftM.move(100);
-   		BackRightM.move(-100);
-    }
 
-    if(MasterC.get_digital(DIGITAL_DOWN)){
-      printf("FrontRightM %f\n", FrontRightM.get_position());
-      printf("FrontLeftM %f\n", FrontLeftM.get_position());
-      printf("BackRightM %f\n", BackRightM.get_position());
-      printf("BackLeftM %f\n", BackLeftM.get_position());
-    }
-
-    /*
     if(MasterC.get_digital(DIGITAL_UP) && !recording && !competition::is_connected()){
       while(MasterC.get_digital(DIGITAL_UP)){};
       Task recordTask (record, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
@@ -161,22 +145,15 @@ void opcontrol() {
     if(MasterC.get_digital(DIGITAL_DOWN) && !recording && !competition::is_connected()){
       while(MasterC.get_digital(DIGITAL_DOWN)){};
       for(int i = 0; i<positionsTemp; i++){
-          //printf("FrontRightM.move_absolute(%f,100);\n", motorPosTemp[i][0]);
-          //printf("FrontLeftM.move_absolute(%f,100);\n", motorPosTemp[i][1]);
+          printf("\nFrontRightM.move_absolute(%f,100);\n", motorPosTemp[i][0]);
+          printf("FrontLeftM.move_absolute(%f,100);\n", motorPosTemp[i][1]);
           printf("BackRightM.move_absolute(%f,60);\n", motorPosTemp[i][2]);
           printf("BackLeftM.move_absolute(%f,60);\n", motorPosTemp[i][3]);
-          //printf("IntakeM.move_absolute(%f,100);\n", motorPosTemp[i][4]);
-          //printf("LiftM.move_absolute(%f,50);\n", motorPosTemp[i][5]);
-          //printf("while(fabs(FrontRightM.get_position()-%f)>5);\n", motorPosTemp[i][0]);
-          //printf("while(fabs(FrontLeftM.get_position()-%f)>5);\n", motorPosTemp[i][1]);
-          printf("while(fabs(BackRightM.get_position()-(%f))>5);\n", motorPosTemp[i][2]);
-          printf("while(fabs(BackLeftM.get_position()-(%f))>5);\n", motorPosTemp[i][3]);
-          //printf("while(fabs(IntakeM.get_position()-%f)>5);\n", motorPosTemp[i][4]);
-          //printf("while(fabs(LiftM.get_position()-%f)>5);\n", motorPosTemp[i][5]);
-          printf("delay(400);\n");
+          printf("\nwaitUntilSettled();\n");
+          printf("\ndelay(400);\n");
       }
     }
-    */
+
     delay(5);
   }
 }

@@ -53,9 +53,17 @@
      blueBackAuton2();
    }
    */
-   shootBall(-400.0);
-   turnLeft(.17,100);
-   moveForward(15,75);
-   while(true){}
+   shootBall(-405.0);
+   turnLeft(.18,100);
+   delay(1000);
+   IntakeM.move(-200);
+   moveForward(50,200);
+   delay(1000);
+   moveBackward(10, 200);
+   delay(500);
+   turnRight(.22, 100);
+   IntakeM.move(0);
+   delay(1000);
+   shootBall(-405.0);
    autonRunning = false;
  }
