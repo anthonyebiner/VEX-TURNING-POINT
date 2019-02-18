@@ -39,11 +39,13 @@ extern int distanceSeperation;
 extern int highVelocities[];
 extern int midVelocities[];
 
-extern int velocity;
+extern int frontVelocity;
+extern int backVelocity;
 
 extern int distanceToFlags();
 
 extern void moveForward(int distance, int velocity);
+extern void drive(int fr, int fl, int bl, int br);
 extern void moveBackward(int distance, int velocity);
 extern void turnLeft(float turn, int velocity);
 extern void turnRight(float turn, int velocity);
@@ -59,6 +61,7 @@ extern void shootDefault();
 extern void waitUntilSettled();
 
 void shootBall(float targetVelocity);
+void shootBarage();
 
 extern void resetPositions();
 

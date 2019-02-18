@@ -40,19 +40,43 @@ float velocityMid(){
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+void drive(int fr, int fl, int bl, int br){
+  int count = 0;
+  float frkp = 0.3;
+  float flkp = 0.45;
+  float blkp = 0.45;
+  float brkp = 0.3;
+  int frerror = 100;
+  int flerror = 100;
+  int blerror = 100;
+  int brerror = 100;
+  resetPositions();
+
+  while(true){
+    frerror = fr - FrontRightM.get_position();
+    flerror = fl - FrontLeftM.get_position();
+    blerror = bl - BackLeftM.get_position();
+    brerror = fr - BackRightM.get_position();
+    FrontRightM.move(frerror * frkp);
+    FrontLeftM.move(flerror * flkp);
+    BackLeftM.move(blerror * blkp);
+    BackRightM.move(brerror * brkp);
+    if(abs(frerror) < 175 && abs(flerror) < 175 && abs(blerror) < 175 && abs(brerror) < 175){
+      count++;
+    }
+    if (count > 50){
+      return;
+    }
+    delay(5);
+  }
+}
 
 void moveForward(int distance, int velocity){
-  FrontRightM.move(0);
-  FrontLeftM.move(0);
-  BackRightM.move_relative(distanceToDegreesBack(distance), velocity);
-  BackLeftM.move_relative(distanceToDegreesBack(distance), velocity);
+  drive(distanceToDegreesFront(distance),distanceToDegreesFront(distance),distanceToDegreesBack(distance),distanceToDegreesBack(distance));
 }
 
 void moveBackward(int distance, int velocity){
-  FrontRightM.move(0);
-  FrontLeftM.move(0);
-  BackRightM.move_relative(-distanceToDegreesBack(distance), velocity);
-  BackLeftM.move_relative(-distanceToDegreesBack(distance), velocity);
+  drive(-distanceToDegreesFront(distance),-distanceToDegreesFront(distance),-distanceToDegreesBack(distance),-distanceToDegreesBack(distance));
 }
 
 void turnLeft(float turn, int velocity){
@@ -62,7 +86,7 @@ void turnLeft(float turn, int velocity){
   BackLeftM.move_relative(turn*-1225,velocity);
 }
 
-void turnRight(float turn, int svelocity){
+void turnRight(float turn, int velocity){
   FrontRightM.move_relative(turn*-1075,velocity);
   FrontLeftM.move_relative(turn*1550,velocity);
   BackRightM.move_relative(turn*-1400,velocity);
@@ -82,6 +106,14 @@ void shootBall(float targetVelocity){
       control = true;
       return;
     }
+    int power = MasterC.get_analog(ANALOG_LEFT_Y);
+    int turn = MasterC.get_analog(ANALOG_LEFT_X);
+    int left = power + turn;
+    int right = power - turn;
+    FrontRightM.move(right);
+    FrontLeftM.move(left);
+    BackLeftM.move(left);
+    BackRightM.move(right);
     delay(5);
   }
   IntakeM.move(-100);
@@ -94,11 +126,19 @@ void shootBall(float targetVelocity){
     }
     delay(5);
   }
-  delay(500);
+  delay(100);
   IntakeM.move(0);
   Flywheel1M.move_velocity(0);
   Flywheel2M.move_velocity(0);
   MasterC.rumble("-");
+}\
+
+void shootBarage(){
+  control = false;
+  shootBall(-500);
+  delay(900);
+  IntakeM.move(-100);
+  control = true;
 }
 
 void alignBack(){
@@ -153,7 +193,7 @@ void shootMid(){
 }
 
 void shootDefault(){
-  shootBall(velocity);
+  shootBall(frontVelocity);
 }
 
 void scoreCapLow(){

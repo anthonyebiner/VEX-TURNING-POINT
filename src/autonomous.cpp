@@ -53,17 +53,23 @@
      blueBackAuton2();
    }
    */
-   shootBall(-405.0);
-   turnLeft(.18,100);
+   //shootBall(-400.0);
+   /*turnLeft(.17, 150);
    delay(1000);
-   IntakeM.move(-200);
-   moveForward(50,200);
+   IntakeM.move_velocity(-200);
+   drive(1100,1100,1100,1100);
    delay(1000);
-   moveBackward(10, 200);
-   delay(500);
-   turnRight(.22, 100);
-   IntakeM.move(0);
-   delay(1000);
-   shootBall(-405.0);
+   IntakeM.move_velocity(0);
+   //turnRight(.25,150);
+   drive(-750,-750,-750,-750);
+   //turnRight(.17, 150);
+   shootBall(-440);*/
+
+   shootBall(-525);
+   drive(1300,1300,1300,1300);
+   drive(-1300,-1300,-1300,-1300);
+   /*turnLeft(.25, 150);
+   drive(1000,1000,1000,1000);
+   moveForward(1500, 0);*/
    autonRunning = false;
  }

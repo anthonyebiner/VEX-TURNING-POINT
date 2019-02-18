@@ -19,7 +19,8 @@ Purpose:						Competition code for 6526D
 */
 #include "declareStuff.hpp"
 
-int velocity = -525;
+int frontVelocity = -525;
+int backVelocity = -430;
 bool control = true;
 
 int adjust = 1; //number divided by motor power in order to keep recording at a managable speed
@@ -102,6 +103,21 @@ void opcontrol() {
         LiftM.move(MasterC.get_analog(ANALOG_RIGHT_Y));
       }
 
+      if(MasterC.get_digital(DIGITAL_A)){
+        Flywheel1M.move_velocity(frontVelocity);
+        Flywheel2M.move_velocity(frontVelocity);
+      }else if(MasterC.get_digital(DIGITAL_Y)){
+        Flywheel1M.move_velocity(backVelocity);
+        Flywheel2M.move_velocity(backVelocity);
+      }else if(MasterC.get_digital(DIGITAL_X)){
+        shootBarage();
+        while(MasterC.get_digital(DIGITAL_X)){}
+      }else if(MasterC.get_digital(DIGITAL_L1) && !decelerating){
+        Task decelerateTask (decelerate, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
+      }else if(!decelerating){
+        Flywheel1M.move(0);
+        Flywheel2M.move(0);
+      }
 
       int power = MasterC.get_analog(ANALOG_LEFT_Y);
       int turn = MasterC.get_analog(ANALOG_LEFT_X);
@@ -116,23 +132,14 @@ void opcontrol() {
       int left = power + turn;
       int right = power - turn;
       FrontRightM.move(right/adjust);
-   		FrontLeftM.move(left/adjust);
-   		BackLeftM.move(left/adjust);
-   		BackRightM.move(right/adjust);
-
-
-      if(MasterC.get_digital(DIGITAL_A)){
-        Flywheel1M.move_velocity(velocity);
-        Flywheel2M.move_velocity(velocity);
-      }else if(MasterC.get_digital(DIGITAL_L1) && !decelerating){
-        Task decelerateTask (decelerate, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
-      }else if(!decelerating){
-        Flywheel1M.move(0);
-        Flywheel2M.move(0);
-      }
+      FrontLeftM.move(left/adjust);
+      BackLeftM.move(left/adjust);
+      BackRightM.move(right/adjust);
     }
 
-    if(abs(velocity) - fabs(Flywheel1M.get_actual_velocity()) < 5){
+    if(abs(frontVelocity) - fabs(Flywheel1M.get_actual_velocity()) < 5 && MasterC.get_digital(DIGITAL_A)){
+      MasterC.rumble("-");
+    }else if(abs(backVelocity) - fabs(Flywheel1M.get_actual_velocity()) < 5 && MasterC.get_digital(DIGITAL_Y)){
       MasterC.rumble("-");
     }
 
