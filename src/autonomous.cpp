@@ -34,6 +34,8 @@
 
  void autonomous() {
    autonRunning = true;
-   
+
+   driveController.moveTo({Point{0_ft, 0_ft, 0_deg}, Point{1_ft, 1_ft, 0_deg}});
+
    autonRunning = false;
  }

@@ -19,22 +19,22 @@ Purpose:						Competition code for 6526D
 */
 #include "declareStuff.hpp"
 
-int frontVelocity = -525;
-int backVelocity = -430;
+int frontVelocity = 500;
+int backVelocity = 430;
 bool control = true;
 
 bool decelerating;
 void decelerate(void* param){
   decelerating = true;
   int sped = Flywheel1M.get_actual_velocity();
-  while(MasterC.get_digital(DIGITAL_L1)){
+  while(intakeInButton.isPressed()){
     sped += 3;
     if(sped > 50){
       sped = 50;
     }
     Flywheel1M.move_velocity(sped);
     Flywheel2M.move_velocity(sped);
-    delay(5);
+    pros::delay(5);
   }
   decelerating = false;
 }
@@ -44,61 +44,48 @@ void opcontrol() {
   while(true){
     if(control){
 
-    	if(MasterC.get_digital(DIGITAL_L1)){
-    		IntakeM.move(-127);
-  		}else if(MasterC.get_digital(DIGITAL_L2)){
-  			IntakeM.move(127);
+    	if(intakeInButton.isPressed()){
+    		IntakeM.move(127);
+  		}else if(intakeOutButton.isPressed()){
+  			IntakeM.move(-127);
   		}else{
   			IntakeM.move(0);
   		}
 
 
-      if(abs(MasterC.get_analog(ANALOG_RIGHT_Y))<15){
+      if(abs(MasterC.getAnalog(ControllerAnalog::rightY))<15){
         LiftM.move_velocity(0);
       }else{
-        LiftM.move(MasterC.get_analog(ANALOG_RIGHT_Y));
+        LiftM.move(MasterC.getAnalog(ControllerAnalog::rightY));
       }
 
 
-      if(MasterC.get_digital(DIGITAL_A)){
-        Flywheel1M.move_velocity(frontVelocity);
-        Flywheel2M.move_velocity(frontVelocity);
+      if(runFlywheelFastButton.isPressed()){
+        flywheel.moveVelocity(frontVelocity);
 
-      }else if(MasterC.get_digital(DIGITAL_Y)){
-        Flywheel1M.move_velocity(backVelocity);
-        Flywheel2M.move_velocity(backVelocity);
+      }else if(runFlywheelSlowButton.isPressed()){
+        flywheel.moveVelocity(backVelocity);
 
-      }else if(MasterC.get_digital(DIGITAL_X)){
-        shootBarage();
-        while(MasterC.get_digital(DIGITAL_X)){}
+      }else if(shootBarageButton.changedToPressed()){
+        //shootBarage();
 
-      }else if(MasterC.get_digital(DIGITAL_L1) && !decelerating){
-        Task decelerateTask (decelerate, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
+      }else if(intakeInButton.isPressed() && !decelerating){
+        pros::Task decelerateTask (decelerate, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
 
       }else if(!decelerating){
         Flywheel1M.move(0);
         Flywheel2M.move(0);
       }
 
-
-      int power = MasterC.get_analog(ANALOG_LEFT_Y);
-      int turn = MasterC.get_analog(ANALOG_LEFT_X);
-
-      int left = power + turn;
-      int right = power - turn;
-
-      FrontRightM.move(right);
-      FrontLeftM.move(left);
-      BackLeftM.move(left);
-      BackRightM.move(right);
+      drive.arcade(MasterC.getAnalog(ControllerAnalog::leftY), MasterC.getAnalog(ControllerAnalog::leftX));
     }
 
-    if(abs(frontVelocity) - fabs(Flywheel1M.get_actual_velocity()) < 5 && MasterC.get_digital(DIGITAL_A)){
+    if(abs(525) - fabs(Flywheel1M.get_actual_velocity()) < 5 && runFlywheelFastButton.isPressed()){
       MasterC.rumble("-");
-    }else if(abs(backVelocity) - fabs(Flywheel1M.get_actual_velocity()) < 5 && MasterC.get_digital(DIGITAL_Y)){
-      MasterC.rumble("-");
+    }else if(abs(480) - fabs(Flywheel1M.get_actual_velocity()) < 5 && runFlywheelSlowButton.isPressed()){
+      MasterC.rumble("-");;
     }
 
-    delay(5);
+    pros::delay(5);
   }
 }
