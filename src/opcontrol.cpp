@@ -22,6 +22,15 @@ Purpose:						Competition code for 6526D
 int fastVelocity = 500;
 int mediumVelocity = 470;
 int slowVelocity = 430;
+
+const int NUM_HEIGHTS = 4;
+const int height1 = 0;
+const int height2 = 60;
+const int height3 = 140;
+const int height4 = 160;
+
+const int heights[NUM_HEIGHTS] = {height1, height2, height3, height4};
+
 bool control = true;
 
 bool decelerating;
@@ -41,6 +50,7 @@ void decelerate(void* param){
 
 //starts user control
 void opcontrol() {
+  int goalHeight = 0;
   while(true){
   	if(intakeInButton.isPressed()){
   		IntakeM.move(127);
@@ -53,11 +63,13 @@ void opcontrol() {
 		}
 
 
-    if(abs(MasterC.getAnalog(ControllerAnalog::rightY))<15){
-      LiftM.move_velocity(0);
-
-    }else{
-      LiftM.move(MasterC.getAnalog(ControllerAnalog::rightY));
+    if (liftUp.changedToPressed() && goalHeight < NUM_HEIGHTS - 1) {
+      // If the goal height is not at maximum and the up button is pressed, increase the setpoint
+      goalHeight++;
+      lift.setTarget(heights[goalHeight]);
+    } else if (liftDown.changedToPressed() && goalHeight > 0) {
+      goalHeight--;
+      lift.setTarget(heights[goalHeight]);
     }
 
 

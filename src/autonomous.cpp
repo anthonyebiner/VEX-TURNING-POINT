@@ -34,11 +34,8 @@
 
  void autonomous() {
    autonRunning = true;
-   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3.5_ft, 0_ft, 0_deg}}, "Cap");
-   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, 2_ft, 70_deg}}, "Flag");
-   driveController.setTarget("Cap");
-   driveController.waitUntilSettled();
-   driveController.setTarget("Flag", true);
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3.5_ft, 0_ft, 0_deg}}, "A");
+   driveController.setTarget("A");
    driveController.waitUntilSettled();
 
    autonRunning = false;

@@ -18,8 +18,12 @@ extern ControllerButton intakeOutButton;
 extern ControllerButton runFlywheelFastButton;
 extern ControllerButton runFlywheelMediumButton;
 extern ControllerButton runFlywheelSlowButton;
+extern ControllerButton liftUp;
+extern ControllerButton liftDown;
 
+extern AsyncPosIntegratedController lift;
 extern ChassisControllerIntegrated drive;
+extern ChassisControllerPID drivePID;
 
 extern MotorGroup flywheel;
 
