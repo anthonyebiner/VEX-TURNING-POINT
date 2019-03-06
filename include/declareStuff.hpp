@@ -16,8 +16,8 @@ extern Controller MasterC;
 extern ControllerButton intakeInButton;
 extern ControllerButton intakeOutButton;
 extern ControllerButton runFlywheelFastButton;
+extern ControllerButton runFlywheelMediumButton;
 extern ControllerButton runFlywheelSlowButton;
-extern ControllerButton shootBarageButton;
 
 extern ChassisControllerIntegrated drive;
 
@@ -28,11 +28,10 @@ extern AsyncMotionProfileController driveController;
 extern bool control;
 extern bool autonRunning;
 
-extern int frontVelocity;
-extern int backVelocity;
+extern int fastVelocity;
+extern int mediumVelocity;
+extern int slowVelocity;
 
-extern double testVelocities[];
-
-void shootBall(float targetVelocity);
-void shootBarage();
+float velocityToVoltage(int velocity);
+void testFlywheel();
 #endif

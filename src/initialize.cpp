@@ -12,19 +12,19 @@ Controller MasterC;
 
 ControllerButton intakeInButton(ControllerDigital::L1);
 ControllerButton intakeOutButton(ControllerDigital::L2);
-ControllerButton runFlywheelFastButton(ControllerDigital::A);
-ControllerButton runFlywheelSlowButton(ControllerDigital::Y);
-ControllerButton shootBarageButton(ControllerDigital::X);
+ControllerButton runFlywheelFastButton(ControllerDigital::X);
+ControllerButton runFlywheelMediumButton(ControllerDigital::A);
+ControllerButton runFlywheelSlowButton(ControllerDigital::B);
 
 ChassisControllerIntegrated drive = ChassisControllerFactory::create(
   {FrontLeftM, BackLeftM}, {FrontRightM, BackRightM},
   AbstractMotor::gearset::green,
-  {4_in, 17_in}
+  {4.15_in, 18_in}
 );
 
 MotorGroup flywheel({Flywheel1M,Flywheel2M});
 
-AsyncMotionProfileController driveController = AsyncControllerFactory::motionProfile(1.0, 2.0, 10.0, drive);
+AsyncMotionProfileController driveController = AsyncControllerFactory::motionProfile(0.75, 1.0, 5.0, drive);
 
 bool autonRunning = false;
 
