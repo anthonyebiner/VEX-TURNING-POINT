@@ -60,20 +60,24 @@ void opcontrol() {
   flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
 
   while(true){
-  	if(intakeInButton.isPressed()){
+    if((runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed() || runFlywheelSlowButton.isPressed())
+       && intakeInButton.changedToPressed()){
+      IntakeM.move(127);
+      wait(400);
+      IntakeM.move(0);
+    }else if(!(runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed() || runFlywheelSlowButton.isPressed())
+             && intakeInButton.isPressed()){
   		IntakeM.move(127);
-
   	}else if(intakeOutButton.isPressed()){
 			IntakeM.move(-127);
-
   	}else{
   		IntakeM.move(0);
     }
 
+
     if (liftUpButton.changedToPressed() && goalHeight < NUM_HEIGHTS - 1) {
       goalHeight++;
       lift.setTarget(heights[goalHeight]);
-
     } else if (liftDownButton.changedToPressed() && goalHeight > 1) {
       goalHeight--;
       lift.setTarget(heights[goalHeight]);
@@ -82,16 +86,12 @@ void opcontrol() {
 /*
     if(runFlywheelFastButton.isPressed()){
       flywheel.moveVoltage(velocityToVoltage(fastVelocity));
-
     }else if(runFlywheelMediumButton.isPressed()){
       flywheel.moveVoltage(velocityToVoltage(mediumVelocity));
-
     }else if(runFlywheelSlowButton.isPressed()){
       flywheel.moveVoltage(velocityToVoltage(slowVelocity));
-
     }else if(intakeInButton.isPressed() && !decelerating){
       pros::Task decelerateTask (decelerate, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
-
     }else if(!decelerating){
       Flywheel1M.move(0);
       Flywheel2M.move(0);
@@ -100,39 +100,56 @@ void opcontrol() {
 
     if(runFlywheelFastButton.changedToPressed()){
       flywheel.moveVoltage(velocityToVoltage(fastVelocity));
+      IntakeM.move(-127);
+      wait(250);
+      IntakeM.move(0);
       goalHeight = 0;
       lift.setTarget(heights[goalHeight]);
     }else if(runFlywheelFastButton.changedToReleased()){
       flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+      IntakeM.move(-127);
+      wait(250);
+      IntakeM.move(0);
       goalHeight = 1;
       lift.setTarget(heights[goalHeight]);
     }else if(runFlywheelMediumButton.changedToPressed()){
       flywheel.moveVoltage(velocityToVoltage(mediumVelocity));
+      IntakeM.move(-127);
+      wait(250);
+      IntakeM.move(0);
       goalHeight = 0;
       lift.setTarget(heights[goalHeight]);
     }else if(runFlywheelMediumButton.changedToReleased()){
       flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+      IntakeM.move(-127);
+      wait(250);
+      IntakeM.move(0);
       goalHeight = 1;
       lift.setTarget(heights[goalHeight]);
     }else if(runFlywheelSlowButton.changedToPressed()){
       flywheel.moveVoltage(velocityToVoltage(slowVelocity));
+      IntakeM.move(-127);
+      wait(250);
+      IntakeM.move(0);
       goalHeight = 0;
       lift.setTarget(heights[goalHeight]);
     }else if(runFlywheelSlowButton.changedToReleased()){
       flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+      IntakeM.move(-127);
+      wait(250);
+      IntakeM.move(0);
       goalHeight = 1;
       lift.setTarget(heights[goalHeight]);
     }
+
 
     drive.arcade(MasterC.getAnalog(ControllerAnalog::leftY), MasterC.getAnalog(ControllerAnalog::leftX));
 
 
     if(abs(fastVelocity) - fabs(Flywheel1M.get_actual_velocity()) < 15 && runFlywheelFastButton.isPressed()){
       MasterC.rumble("-");
-
     }else if(abs(mediumVelocity) - fabs(Flywheel1M.get_actual_velocity()) < 15 && runFlywheelMediumButton.isPressed()){
       MasterC.rumble("-");;
-
     }else if(abs(slowVelocity) - fabs(Flywheel1M.get_actual_velocity()) < 15 && runFlywheelSlowButton.isPressed()){
       MasterC.rumble("-");;
     }

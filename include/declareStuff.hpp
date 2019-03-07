@@ -47,6 +47,6 @@ extern const int heights[];
 extern int goalHeight;
 
 float velocityToVoltage(int velocity);
+void wait(int ms);
 void testFlywheel();
-void shootBall(int velocity);
 #endif
