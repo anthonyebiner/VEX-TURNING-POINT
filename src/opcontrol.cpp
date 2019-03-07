@@ -92,7 +92,7 @@ void opcontrol() {
       flywheel.moveVoltage(velocityToVoltage(slowVelocity));
     }else if(intakeInButton.isPressed() && !decelerating){
       pros::Task decelerateTask (decelerate, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
-    }else if(!decelerating){
+    }else if(!decelerating){a
       Flywheel1M.move(0);
       Flywheel2M.move(0);
     }
