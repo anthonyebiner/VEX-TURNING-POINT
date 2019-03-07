@@ -18,12 +18,11 @@ extern ControllerButton intakeOutButton;
 extern ControllerButton runFlywheelFastButton;
 extern ControllerButton runFlywheelMediumButton;
 extern ControllerButton runFlywheelSlowButton;
-extern ControllerButton liftUp;
-extern ControllerButton liftDown;
+extern ControllerButton liftUpButton;
+extern ControllerButton liftDownButton;
 
 extern AsyncPosIntegratedController lift;
 extern ChassisControllerIntegrated drive;
-extern ChassisControllerPID drivePID;
 
 extern MotorGroup flywheel;
 
@@ -35,7 +34,19 @@ extern bool autonRunning;
 extern int fastVelocity;
 extern int mediumVelocity;
 extern int slowVelocity;
+extern int defaultVelocity;
+
+extern const int NUM_HEIGHTS;
+extern const int height1;
+extern const int height2;
+extern const int height3;
+extern const int height4;
+
+extern const int heights[];
+
+extern int goalHeight;
 
 float velocityToVoltage(int velocity);
 void testFlywheel();
+void shootBall(int velocity);
 #endif

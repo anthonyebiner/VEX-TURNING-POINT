@@ -15,18 +15,11 @@ ControllerButton intakeOutButton(ControllerDigital::L2);
 ControllerButton runFlywheelFastButton(ControllerDigital::X);
 ControllerButton runFlywheelMediumButton(ControllerDigital::A);
 ControllerButton runFlywheelSlowButton(ControllerDigital::B);
+ControllerButton liftUpButton(ControllerDigital::R1);
+ControllerButton liftDownButton(ControllerDigital::R2);
 
 ChassisControllerIntegrated drive = ChassisControllerFactory::create(
   {FrontLeftM, BackLeftM}, {FrontRightM, BackRightM},
-  AbstractMotor::gearset::green,
-  {4.15_in, 14.5_in}
-);
-
-ChassisControllerPID drivePID = ChassisControllerFactory::create(
-  {FrontLeftM, BackLeftM}, {FrontRightM, BackRightM},
-  IterativePosPIDController::Gains{0.004, 0.00001, 0.000008},
-  IterativePosPIDController::Gains{0.004, 0, 0.0001},
-  IterativePosPIDController::Gains{0.006, 0.00001, 0.0001},
   AbstractMotor::gearset::green,
   {4.15_in, 14.5_in}
 );

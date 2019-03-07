@@ -19,17 +19,21 @@ Purpose:						Competition code for 6526D
 */
 #include "declareStuff.hpp"
 
-int fastVelocity = 500;
-int mediumVelocity = 470;
-int slowVelocity = 430;
+int fastVelocity = 525;
+int mediumVelocity = 480;
+int slowVelocity = 450;
+int defaultVelocity = 500;
 
-const int NUM_HEIGHTS = 4;
-const int height1 = 0;
-const int height2 = 60;
-const int height3 = 140;
-const int height4 = 160;
+const int NUM_HEIGHTS = 5;
+const int height0 = 0;
+const int height1 = 180;
+const int height2 = 350;
+const int height3 = 600;
+const int height4 = 700;
 
-const int heights[NUM_HEIGHTS] = {height1, height2, height3, height4};
+const int heights[NUM_HEIGHTS] = {height0, height1, height2, height3, height4};
+
+int goalHeight = 0;
 
 bool control = true;
 
@@ -50,7 +54,11 @@ void decelerate(void* param){
 
 //starts user control
 void opcontrol() {
-  int goalHeight = 0;
+  goalHeight = 1;
+  lift.setTarget(heights[goalHeight]);
+
+  flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+
   while(true){
   	if(intakeInButton.isPressed()){
   		IntakeM.move(127);
@@ -60,19 +68,18 @@ void opcontrol() {
 
   	}else{
   		IntakeM.move(0);
-		}
+    }
 
-
-    if (liftUp.changedToPressed() && goalHeight < NUM_HEIGHTS - 1) {
-      // If the goal height is not at maximum and the up button is pressed, increase the setpoint
+    if (liftUpButton.changedToPressed() && goalHeight < NUM_HEIGHTS - 1) {
       goalHeight++;
       lift.setTarget(heights[goalHeight]);
-    } else if (liftDown.changedToPressed() && goalHeight > 0) {
+
+    } else if (liftDownButton.changedToPressed() && goalHeight > 1) {
       goalHeight--;
       lift.setTarget(heights[goalHeight]);
     }
 
-
+/*
     if(runFlywheelFastButton.isPressed()){
       flywheel.moveVoltage(velocityToVoltage(fastVelocity));
 
@@ -89,14 +96,44 @@ void opcontrol() {
       Flywheel1M.move(0);
       Flywheel2M.move(0);
     }
+*/
 
+    if(runFlywheelFastButton.changedToPressed()){
+      flywheel.moveVoltage(velocityToVoltage(fastVelocity));
+      goalHeight = 0;
+      lift.setTarget(heights[goalHeight]);
+    }else if(runFlywheelFastButton.changedToReleased()){
+      flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+      goalHeight = 1;
+      lift.setTarget(heights[goalHeight]);
+    }else if(runFlywheelMediumButton.changedToPressed()){
+      flywheel.moveVoltage(velocityToVoltage(mediumVelocity));
+      goalHeight = 0;
+      lift.setTarget(heights[goalHeight]);
+    }else if(runFlywheelMediumButton.changedToReleased()){
+      flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+      goalHeight = 1;
+      lift.setTarget(heights[goalHeight]);
+    }else if(runFlywheelSlowButton.changedToPressed()){
+      flywheel.moveVoltage(velocityToVoltage(slowVelocity));
+      goalHeight = 0;
+      lift.setTarget(heights[goalHeight]);
+    }else if(runFlywheelSlowButton.changedToReleased()){
+      flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+      goalHeight = 1;
+      lift.setTarget(heights[goalHeight]);
+    }
 
     drive.arcade(MasterC.getAnalog(ControllerAnalog::leftY), MasterC.getAnalog(ControllerAnalog::leftX));
 
 
-    if(abs(525) - fabs(Flywheel1M.get_actual_velocity()) < 5 && runFlywheelFastButton.isPressed()){
+    if(abs(fastVelocity) - fabs(Flywheel1M.get_actual_velocity()) < 15 && runFlywheelFastButton.isPressed()){
       MasterC.rumble("-");
-    }else if(abs(480) - fabs(Flywheel1M.get_actual_velocity()) < 5 && runFlywheelSlowButton.isPressed()){
+
+    }else if(abs(mediumVelocity) - fabs(Flywheel1M.get_actual_velocity()) < 15 && runFlywheelMediumButton.isPressed()){
+      MasterC.rumble("-");;
+
+    }else if(abs(slowVelocity) - fabs(Flywheel1M.get_actual_velocity()) < 15 && runFlywheelSlowButton.isPressed()){
       MasterC.rumble("-");;
     }
 

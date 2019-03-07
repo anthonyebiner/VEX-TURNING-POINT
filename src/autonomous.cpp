@@ -37,6 +37,7 @@
    driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3.5_ft, 0_ft, 0_deg}}, "A");
    driveController.setTarget("A");
    driveController.waitUntilSettled();
+   drive.turnAngle(180_deg);
 
    autonRunning = false;
  }
