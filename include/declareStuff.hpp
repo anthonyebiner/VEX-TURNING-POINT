@@ -28,9 +28,6 @@ extern MotorGroup flywheel;
 
 extern AsyncMotionProfileController driveController;
 
-extern bool control;
-extern bool autonRunning;
-
 extern int fastVelocity;
 extern int mediumVelocity;
 extern int slowVelocity;
@@ -48,5 +45,6 @@ extern int goalHeight;
 
 float velocityToVoltage(int velocity);
 void wait(int ms);
+void shootBall(int velocity);
 void testFlywheel();
 #endif

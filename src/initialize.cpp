@@ -21,7 +21,7 @@ ControllerButton liftDownButton(ControllerDigital::R2);
 ChassisControllerIntegrated drive = ChassisControllerFactory::create(
   {FrontLeftM, BackLeftM}, {FrontRightM, BackRightM},
   AbstractMotor::gearset::green,
-  {4.15_in, 14.5_in}
+  {4.15_in, 16.6_in}
 );
 
 AsyncPosIntegratedController lift = AsyncControllerFactory::posIntegrated(LiftM);
@@ -29,8 +29,6 @@ AsyncPosIntegratedController lift = AsyncControllerFactory::posIntegrated(LiftM)
 MotorGroup flywheel({Flywheel1M,Flywheel2M});
 
 AsyncMotionProfileController driveController = AsyncControllerFactory::motionProfile(0.75, 1.0, 5.0, drive);
-
-bool autonRunning = false;
 
 void initialize() {
 	Flywheel1M.set_brake_mode(MOTOR_BRAKE_COAST);
@@ -41,6 +39,16 @@ void initialize() {
 	FrontRightM.set_brake_mode(MOTOR_BRAKE_HOLD);
 	BackRightM.set_brake_mode(MOTOR_BRAKE_HOLD);
 	BackLeftM.set_brake_mode(MOTOR_BRAKE_HOLD);
+
+  LiftM.tarePosition();
+
+  goalHeight = 0;
+  lift.setTarget(heights[goalHeight]);
+
+  pros::delay(250);
+
+  goalHeight = 1;
+  lift.setTarget(heights[goalHeight]);
 }
 
 void disabled() {
