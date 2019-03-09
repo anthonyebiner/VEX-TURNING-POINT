@@ -4,7 +4,7 @@ Motor FrontLeftM(2,  false, AbstractMotor::gearset::green, AbstractMotor::encode
 Motor BackRightM(3,  true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 Motor BackLeftM(4,  false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 Motor IntakeM(5,  true, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees);
-Motor LiftM(6,  false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
+Motor LiftM(6,  true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
 Motor Flywheel1M(9,  false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees);
 Motor Flywheel2M(10,  true, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees);
 
@@ -15,6 +15,7 @@ ControllerButton intakeOutButton(ControllerDigital::L2);
 ControllerButton runFlywheelFastButton(ControllerDigital::X);
 ControllerButton runFlywheelMediumButton(ControllerDigital::A);
 ControllerButton runFlywheelSlowButton(ControllerDigital::B);
+ControllerButton barrageButton(ControllerDigital::Y);
 ControllerButton liftUpButton(ControllerDigital::R1);
 ControllerButton liftDownButton(ControllerDigital::R2);
 
@@ -28,7 +29,7 @@ AsyncPosIntegratedController lift = AsyncControllerFactory::posIntegrated(LiftM)
 
 MotorGroup flywheel({Flywheel1M,Flywheel2M});
 
-AsyncMotionProfileController driveController = AsyncControllerFactory::motionProfile(0.75, 1.0, 5.0, drive);
+AsyncMotionProfileController driveController = AsyncControllerFactory::motionProfile(1.0, 2.0, 5.0, drive);
 
 void initialize() {
 	Flywheel1M.set_brake_mode(MOTOR_BRAKE_COAST);
@@ -41,14 +42,6 @@ void initialize() {
 	BackLeftM.set_brake_mode(MOTOR_BRAKE_HOLD);
 
   LiftM.tarePosition();
-
-  goalHeight = 0;
-  lift.setTarget(heights[goalHeight]);
-
-  pros::delay(250);
-
-  goalHeight = 1;
-  lift.setTarget(heights[goalHeight]);
 }
 
 void disabled() {

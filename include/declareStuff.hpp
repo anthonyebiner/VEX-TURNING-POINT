@@ -18,6 +18,7 @@ extern ControllerButton intakeOutButton;
 extern ControllerButton runFlywheelFastButton;
 extern ControllerButton runFlywheelMediumButton;
 extern ControllerButton runFlywheelSlowButton;
+extern ControllerButton barrageButton;
 extern ControllerButton liftUpButton;
 extern ControllerButton liftDownButton;
 
@@ -45,6 +46,9 @@ extern int goalHeight;
 
 float velocityToVoltage(int velocity);
 void wait(int ms);
-void shootBall(int velocity);
+void indexerOut();
+void indexerIn();
+void shootBall();
+void shootTwoBallsDriving();
 void testFlywheel();
 #endif
