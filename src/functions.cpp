@@ -17,7 +17,7 @@ void indexerOut(){
   IntakeM.move(0);
   goalHeight = 0;
   lift.setTarget(heights[goalHeight]);
-  pros::delay(250);
+  while(LiftM.getPosition() < 100){}
 }
 
 void indexerIn(){

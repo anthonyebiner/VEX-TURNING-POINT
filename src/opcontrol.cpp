@@ -28,7 +28,7 @@ const int NUM_HEIGHTS = 5;
 const int height0 = 200;
 const int height1 = -50;
 const int height2 = -200;
-const int height3 = -1200;
+const int height3 = -1100;
 const int height4 = -1500;
 
 const int heights[NUM_HEIGHTS] = {height0, height1, height2, height3, height4};
@@ -66,9 +66,7 @@ void opcontrol() {
   IntakeM.move(127);
 
   while(true){
-    if((runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed() || runFlywheelSlowButton.isPressed()) && intakeInButton.isPressed()){
-      IntakeM.move(127);
-    }else if(barrageButton.isPressed() && intakeInButton.changedToPressed()){
+    if(barrageButton.isPressed() && intakeInButton.changedToPressed()){
       flywheel.moveVoltage(0);
       IntakeM.move(127);
       wait(400);
@@ -78,12 +76,17 @@ void opcontrol() {
       wait(500);
       IntakeM.move(0);
       flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
-    }else if(!(runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed() || runFlywheelSlowButton.isPressed() || barrageButton.isPressed())
-       && intakeOutButton.isPressed()){
+    }else if(goalHeight = 0 && intakeInButton.isPressed()){
+      IntakeM.move(127);
+    }else if(goalHeight != 0 && intakeOutButton.isPressed()){
   		IntakeM.move(-127);
-    }else if((runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed() || runFlywheelSlowButton.isPressed() || barrageButton.isPressed())){
+    }else if(goalHeight != 0 && intakeInButton.isPressed()){
   		IntakeM.move(0);
-    }else if(!(runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed() || runFlywheelSlowButton.isPressed() || barrageButton.isPressed())){
+    }else if(goalHeight = 0){
+  		IntakeM.move(0);
+    }else if(goalHeight > 1){
+  		IntakeM.move(0);
+    }else if(goalHeight = 1){
   		IntakeM.move(127);
     }
 
@@ -157,11 +160,11 @@ void opcontrol() {
     drive.arcade(MasterC.getAnalog(ControllerAnalog::leftY), MasterC.getAnalog(ControllerAnalog::leftX));
 
 
-    if(abs(fastVelocity) - fabs(Flywheel1M.get_actual_velocity()) < 20 && runFlywheelFastButton.isPressed()){
+    if(abs(fastVelocity - Flywheel1M.get_actual_velocity()) < 20 && runFlywheelFastButton.isPressed()){
       MasterC.rumble("-");
-    }else if(abs(mediumVelocity) - fabs(Flywheel1M.get_actual_velocity()) < 20 && runFlywheelMediumButton.isPressed()){
+    }else if(abs(mediumVelocity - Flywheel1M.get_actual_velocity()) < 20 && runFlywheelMediumButton.isPressed()){
       MasterC.rumble("-");;
-    }else if(abs(slowVelocity) - fabs(Flywheel1M.get_actual_velocity()) < 20 && runFlywheelSlowButton.isPressed()){
+    }else if(abs(slowVelocity - Flywheel1M.get_actual_velocity()) < 20 && runFlywheelSlowButton.isPressed()){
       MasterC.rumble("-");;
     }
 
