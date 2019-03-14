@@ -25,11 +25,11 @@ int slowVelocity = 450;
 int defaultVelocity = 500;
 
 const int NUM_HEIGHTS = 5;
-const int height0 = 200;
-const int height1 = -50;
-const int height2 = -200;
-const int height3 = -1100;
-const int height4 = -1500;
+const int height0 = -200;
+const int height1 = 50;
+const int height2 = 200;
+const int height3 = 1100;
+const int height4 = 1500;
 
 const int heights[NUM_HEIGHTS] = {height0, height1, height2, height3, height4};
 
@@ -37,20 +37,6 @@ int goalHeight = 0;
 
 bool control = true;
 
-bool decelerating;
-void decelerate(void* param){
-  decelerating = true;
-  int sped = Flywheel1M.get_actual_velocity();
-  while(intakeInButton.isPressed()){
-    sped -= 3;
-    if(sped < -50){
-      sped = -50;
-    }
-    flywheel.moveVoltage(velocityToVoltage(sped));
-    pros::delay(5);
-  }
-  decelerating = false;
-}
 
 //starts user control
 void opcontrol() {
@@ -67,26 +53,25 @@ void opcontrol() {
 
   while(true){
     if(barrageButton.isPressed() && intakeInButton.changedToPressed()){
+      IntakeM.move(127);
+      wait(100);
       flywheel.moveVoltage(0);
-      IntakeM.move(127);
-      wait(400);
-      IntakeM.move(0);
-      wait(200);
-      IntakeM.move(127);
       wait(500);
-      IntakeM.move(0);
       flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
-    }else if(goalHeight = 0 && intakeInButton.isPressed()){
+    }else if((barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed() || runFlywheelSlowButton.isPressed())
+              && intakeInButton.isPressed()){
       IntakeM.move(127);
-    }else if(goalHeight != 0 && intakeOutButton.isPressed()){
+    }else if(!(barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed() || runFlywheelSlowButton.isPressed())
+              && intakeOutButton.isPressed()){
   		IntakeM.move(-127);
-    }else if(goalHeight != 0 && intakeInButton.isPressed()){
+    }else if(!(barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed() || runFlywheelSlowButton.isPressed())
+              && intakeInButton.isPressed()){
   		IntakeM.move(0);
-    }else if(goalHeight = 0){
+    }else if((barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed() || runFlywheelSlowButton.isPressed()) ){
   		IntakeM.move(0);
     }else if(goalHeight > 1){
   		IntakeM.move(0);
-    }else if(goalHeight = 1){
+    }else{
   		IntakeM.move(127);
     }
 
@@ -108,10 +93,11 @@ void opcontrol() {
     }else if(runFlywheelFastButton.changedToReleased()){
       flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
       IntakeM.move(-127);
-      wait(150);
+      wait(250);
       IntakeM.move(0);
       goalHeight = 1;
       lift.setTarget(heights[goalHeight]);
+      wait(300);
     }else if(runFlywheelMediumButton.changedToPressed()){
       flywheel.moveVoltage(velocityToVoltage(mediumVelocity));
       IntakeM.move(-127);
@@ -122,10 +108,11 @@ void opcontrol() {
     }else if(runFlywheelMediumButton.changedToReleased()){
       flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
       IntakeM.move(-127);
-      wait(150);
+      wait(250);
       IntakeM.move(0);
       goalHeight = 1;
       lift.setTarget(heights[goalHeight]);
+      wait(300);
     }else if(runFlywheelSlowButton.changedToPressed()){
       flywheel.moveVoltage(velocityToVoltage(slowVelocity));
       IntakeM.move(-127);
@@ -136,10 +123,11 @@ void opcontrol() {
     }else if(runFlywheelSlowButton.changedToReleased()){
       flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
       IntakeM.move(-127);
-      wait(150);
+      wait(250);
       IntakeM.move(0);
       goalHeight = 1;
       lift.setTarget(heights[goalHeight]);
+      wait(300);
     }else if(barrageButton.changedToPressed()){
       flywheel.moveVoltage(velocityToVoltage(fastVelocity));
       IntakeM.move(-127);
@@ -150,10 +138,11 @@ void opcontrol() {
     }else if(barrageButton.changedToReleased()){
       flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
       IntakeM.move(-127);
-      wait(150);
+      wait(250);
       IntakeM.move(0);
       goalHeight = 1;
       lift.setTarget(heights[goalHeight]);
+      wait(300);
     }
 
 

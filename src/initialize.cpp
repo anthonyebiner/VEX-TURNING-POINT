@@ -4,9 +4,9 @@ Motor FrontLeftM(2,  false, AbstractMotor::gearset::green, AbstractMotor::encode
 Motor BackRightM(3,  true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 Motor BackLeftM(4,  false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 Motor IntakeM(5,  true, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees);
-Motor LiftM(6,  true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
-Motor Flywheel1M(9,  false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees);
-Motor Flywheel2M(10,  true, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees);
+Motor LiftM(6,  false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
+Motor Flywheel1M(9,  true, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees);
+Motor Flywheel2M(10,  false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees);
 
 Controller MasterC;
 
