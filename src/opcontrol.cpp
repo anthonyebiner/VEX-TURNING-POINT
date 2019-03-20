@@ -21,15 +21,16 @@ Purpose:						Competition code for 6526D
 
 int fastVelocity = 525;
 int mediumVelocity = 480;
-int slowVelocity = 450;
 int defaultVelocity = 500;
 
+bool twoBalls = false;
+
 const int NUM_HEIGHTS = 5;
-const int height0 = -200;
-const int height1 = 50;
-const int height2 = 200;
-const int height3 = 1100;
-const int height4 = 1500;
+const int height0 = -50;
+const int height1 = 100;
+const int height2 = 300;
+const int height3 = 1200;
+const int height4 = 1600;
 
 const int heights[NUM_HEIGHTS] = {height0, height1, height2, height3, height4};
 
@@ -48,7 +49,7 @@ void opcontrol() {
   goalHeight = 1;
   lift.setTarget(heights[goalHeight]);
 
-  flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+  //flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
   IntakeM.move(127);
 
   while(true){
@@ -58,21 +59,20 @@ void opcontrol() {
       flywheel.moveVoltage(0);
       wait(500);
       flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
-    }else if((barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed() || runFlywheelSlowButton.isPressed())
-              && intakeInButton.isPressed()){
+    }else if((barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed()) && intakeInButton.isPressed()){
       IntakeM.move(127);
-    }else if(!(barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed() || runFlywheelSlowButton.isPressed())
-              && intakeOutButton.isPressed()){
+    }else if(!(barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed()) && intakeOutButton.isPressed()){
   		IntakeM.move(-127);
-    }else if(!(barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed() || runFlywheelSlowButton.isPressed())
-              && intakeInButton.isPressed()){
+    }else if(!(barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed()) && intakeInButton.isPressed()){
   		IntakeM.move(0);
-    }else if((barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed() || runFlywheelSlowButton.isPressed()) ){
+    }else if((barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed())){
   		IntakeM.move(0);
     }else if(goalHeight > 1){
   		IntakeM.move(0);
-    }else{
+    }else if(!twoBalls){
   		IntakeM.move(127);
+    }else{
+      IntakeM.move(0);
     }
 
     if (liftUpButton.changedToPressed() && goalHeight < NUM_HEIGHTS - 1) {
@@ -113,21 +113,6 @@ void opcontrol() {
       goalHeight = 1;
       lift.setTarget(heights[goalHeight]);
       wait(300);
-    }else if(runFlywheelSlowButton.changedToPressed()){
-      flywheel.moveVoltage(velocityToVoltage(slowVelocity));
-      IntakeM.move(-127);
-      wait(100);
-      IntakeM.move(0);
-      goalHeight = 0;
-      lift.setTarget(heights[goalHeight]);
-    }else if(runFlywheelSlowButton.changedToReleased()){
-      flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
-      IntakeM.move(-127);
-      wait(250);
-      IntakeM.move(0);
-      goalHeight = 1;
-      lift.setTarget(heights[goalHeight]);
-      wait(300);
     }else if(barrageButton.changedToPressed()){
       flywheel.moveVoltage(velocityToVoltage(fastVelocity));
       IntakeM.move(-127);
@@ -153,10 +138,14 @@ void opcontrol() {
       MasterC.rumble("-");
     }else if(abs(mediumVelocity - Flywheel1M.get_actual_velocity()) < 20 && runFlywheelMediumButton.isPressed()){
       MasterC.rumble("-");;
-    }else if(abs(slowVelocity - Flywheel1M.get_actual_velocity()) < 20 && runFlywheelSlowButton.isPressed()){
-      MasterC.rumble("-");;
     }
 
+
+    if(twoBallsButton.changedToReleased()){
+      twoBalls = !twoBalls;
+    }else if((barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed()) && intakeInButton.isPressed()){
+      twoBalls = false;
+    }
 
     pros::delay(5);
   }

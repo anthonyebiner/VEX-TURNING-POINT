@@ -17,7 +17,7 @@ extern ControllerButton intakeInButton;
 extern ControllerButton intakeOutButton;
 extern ControllerButton runFlywheelFastButton;
 extern ControllerButton runFlywheelMediumButton;
-extern ControllerButton runFlywheelSlowButton;
+extern ControllerButton twoBallsButton;
 extern ControllerButton barrageButton;
 extern ControllerButton liftUpButton;
 extern ControllerButton liftDownButton;
@@ -31,8 +31,9 @@ extern AsyncMotionProfileController driveController;
 
 extern int fastVelocity;
 extern int mediumVelocity;
-extern int slowVelocity;
 extern int defaultVelocity;
+
+extern bool twoBalls;
 
 extern const int NUM_HEIGHTS;
 extern const int height1;

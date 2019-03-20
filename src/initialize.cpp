@@ -14,7 +14,7 @@ ControllerButton intakeInButton(ControllerDigital::L1);
 ControllerButton intakeOutButton(ControllerDigital::L2);
 ControllerButton runFlywheelFastButton(ControllerDigital::X);
 ControllerButton runFlywheelMediumButton(ControllerDigital::A);
-ControllerButton runFlywheelSlowButton(ControllerDigital::B);
+ControllerButton twoBallsButton(ControllerDigital::B);
 ControllerButton barrageButton(ControllerDigital::Y);
 ControllerButton liftUpButton(ControllerDigital::R1);
 ControllerButton liftDownButton(ControllerDigital::R2);

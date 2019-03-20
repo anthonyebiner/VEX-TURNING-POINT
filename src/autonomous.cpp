@@ -25,10 +25,20 @@
  }
 
  void blueBackAuton1(){
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, 0_ft, 0_deg}}, "A");
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{2.5_ft, 0_ft, 0_deg}}, "B");
 
+
+   driveController.setTarget("A");
+   driveController.waitUntilSettled();
+   driveController.setTarget("B", true);
+   driveController.waitUntilSettled();
+
+   drive.turnAngle(-90_deg);
  }
 
  void blueBackAuton2(){
+
 
  }
 
@@ -50,5 +60,5 @@
  */
 
  void autonomous() {
-   blueFrontAuton1();
+   blueBackAuton1();
  }
