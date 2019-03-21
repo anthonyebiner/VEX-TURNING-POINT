@@ -53,11 +53,23 @@ void opcontrol() {
   IntakeM.move(127);
 
   while(true){
-    if(barrageButton.isPressed() && intakeInButton.changedToPressed()){
+    if(barrageButton.isPressed() && runFlywheelFastButton.isPressed() && intakeInButton.changedToPressed()){
       IntakeM.move(127);
-      wait(100);
+      wait(0);
       flywheel.moveVoltage(0);
-      wait(500);
+      wait(750);
+      flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+    }else if(barrageButton.isPressed() && runFlywheelMediumButton.isPressed() && intakeInButton.changedToPressed()){
+      IntakeM.move(127);
+      wait(0);
+      flywheel.moveVoltage(0);
+      wait(750);
+      flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+    }else if(barrageButton.isPressed() && intakeInButton.changedToPressed()){
+      IntakeM.move(127);
+      wait(0);
+      flywheel.moveVoltage(0);
+      wait(750);
       flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
     }else if((barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed()) && intakeInButton.isPressed()){
       IntakeM.move(127);
@@ -114,17 +126,21 @@ void opcontrol() {
       lift.setTarget(heights[goalHeight]);
       wait(300);
     }else if(barrageButton.changedToPressed()){
-      flywheel.moveVoltage(velocityToVoltage(fastVelocity));
-      IntakeM.move(-127);
-      wait(100);
-      IntakeM.move(0);
+      if(goalHeight != 0){
+        flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+        IntakeM.move(-127);
+        wait(100);
+        IntakeM.move(0);
+      }
       goalHeight = 0;
       lift.setTarget(heights[goalHeight]);
     }else if(barrageButton.changedToReleased()){
-      flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
-      IntakeM.move(-127);
-      wait(250);
-      IntakeM.move(0);
+      if(goalHeight != 1){
+        flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+        IntakeM.move(-127);
+        wait(250);
+        IntakeM.move(0);
+      }
       goalHeight = 1;
       lift.setTarget(heights[goalHeight]);
       wait(300);

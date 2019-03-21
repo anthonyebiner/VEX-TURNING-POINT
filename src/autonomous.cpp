@@ -1,7 +1,35 @@
 #include "declareStuff.hpp"
 
  void redFrontAuton1(){
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, 0_ft, 0_deg}}, "A");
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, -0.5_ft, 0_deg}}, "B");
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{4_ft, 0_ft, 0_deg}}, "C");
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, 0.5_ft, 0_deg}}, "D");
 
+   goalHeight = 1;
+   lift.setTarget(heights[goalHeight]);
+
+   IntakeM.move(127);
+
+   driveController.setTarget("A");
+   driveController.waitUntilSettled();
+   driveController.setTarget("B", true);
+   driveController.waitUntilSettled();
+
+   drive.turnAngle(-82_deg);
+
+   pros::delay(0);
+
+   shootBarage();
+
+   drive.turnAngle(33_deg);
+
+   pros::delay(0);
+
+   IntakeM.move(-127);
+
+   driveController.setTarget("C");
+   driveController.waitUntilSettled();
  }
 
  void redFrontAuton2(){
@@ -17,7 +45,35 @@
  }
 
  void blueFrontAuton1(){
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, 0_ft, 0_deg}}, "A");
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, 0.5_ft, 0_deg}}, "B");
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{4_ft, 0_ft, 0_deg}}, "C");
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, 0.5_ft, 0_deg}}, "D");
 
+   goalHeight = 1;
+   lift.setTarget(heights[goalHeight]);
+
+   IntakeM.move(127);
+
+   driveController.setTarget("A");
+   driveController.waitUntilSettled();
+   driveController.setTarget("B", true);
+   driveController.waitUntilSettled();
+
+   drive.turnAngle(82_deg);
+
+   pros::delay(0);
+
+   shootBarage();
+
+   drive.turnAngle(-33_deg);
+
+   pros::delay(0);
+
+   IntakeM.move(-127);
+
+   driveController.setTarget("C");
+   driveController.waitUntilSettled();
  }
 
  void blueFrontAuton2(){
@@ -25,16 +81,7 @@
  }
 
  void blueBackAuton1(){
-   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, 0_ft, 0_deg}}, "A");
-   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{2.5_ft, 0_ft, 0_deg}}, "B");
 
-
-   driveController.setTarget("A");
-   driveController.waitUntilSettled();
-   driveController.setTarget("B", true);
-   driveController.waitUntilSettled();
-
-   drive.turnAngle(-90_deg);
  }
 
  void blueBackAuton2(){
@@ -60,5 +107,6 @@
  */
 
  void autonomous() {
-   blueBackAuton1();
+   flywheel.moveVoltage(velocityToVoltage(fastVelocity));
+   redFrontAuton1();
  }

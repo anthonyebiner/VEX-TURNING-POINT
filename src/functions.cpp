@@ -13,16 +13,15 @@ void wait(int ms){
 
 void indexerOut(){
   IntakeM.move(-127);
-  pros::delay(250);
+  wait(100);
   IntakeM.move(0);
   goalHeight = 0;
   lift.setTarget(heights[goalHeight]);
-  while(LiftM.getPosition() < 100){}
 }
 
 void indexerIn(){
   IntakeM.move(-127);
-  pros::delay(150);
+  wait(250);
   IntakeM.move(0);
   goalHeight = 1;
   lift.setTarget(heights[goalHeight]);
@@ -30,7 +29,7 @@ void indexerIn(){
 
 void shootBall(){
   IntakeM.move(127);
-  pros::delay(400);
+  pros::delay(500);
   IntakeM.move(0);
 }
 
@@ -60,6 +59,25 @@ void shootTwoBallsDriving(void* param){
   lift.setTarget(heights[goalHeight]);
 
   flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+}
+
+void shootBarage(){
+  flywheel.moveVoltage(velocityToVoltage(fastVelocity));
+  IntakeM.move(-127);
+  pros::delay(100);
+  IntakeM.move(0);
+  goalHeight = 0;
+  lift.setTarget(heights[goalHeight]);
+  pros::delay(500);
+  IntakeM.move(127);
+  pros::delay(0); //adjust
+  flywheel.moveVoltage(0);
+  pros::delay(600);
+  flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+  pros::delay(750);
+  goalHeight = 1;
+  lift.setTarget(heights[goalHeight]);
+  pros::delay(300);
 }
 
 void testFlywheel(){
