@@ -22,10 +22,10 @@ ControllerButton liftDownButton(ControllerDigital::R2);
 ChassisControllerIntegrated drive = ChassisControllerFactory::create(
   {FrontLeftM, BackLeftM}, {FrontRightM, BackRightM},
   AbstractMotor::gearset::green,
-  {4.15_in, 16.6_in}
+  {4.35_in, 16.8_in}
 );
 
-AsyncPosIntegratedController lift = AsyncControllerFactory::posIntegrated(LiftM);
+ AsyncPosIntegratedController lift = AsyncControllerFactory::posIntegrated(LiftM);
 
 MotorGroup flywheel({Flywheel1M,Flywheel2M});
 

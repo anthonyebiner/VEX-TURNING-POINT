@@ -27,7 +27,7 @@ bool twoBalls = false;
 
 const int NUM_HEIGHTS = 5;
 const int height0 = -50;
-const int height1 = 100;
+const int height1 = 90;
 const int height2 = 300;
 const int height3 = 1200;
 const int height4 = 1600;
@@ -55,8 +55,6 @@ void opcontrol() {
   while(true){
     if(barrageButton.isPressed() && runFlywheelFastButton.isPressed() && intakeInButton.changedToPressed()){
       IntakeM.move(127);
-      wait(0);
-      flywheel.moveVoltage(0);
       wait(750);
       flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
     }else if(barrageButton.isPressed() && runFlywheelMediumButton.isPressed() && intakeInButton.changedToPressed()){
@@ -96,9 +94,12 @@ void opcontrol() {
     }
 
     if(runFlywheelFastButton.changedToPressed()){
-      flywheel.moveVoltage(velocityToVoltage(fastVelocity));
+      if(barrageButton.isPressed())
+        flywheel.moveVoltage(velocityToVoltage(390));
+      else
+        flywheel.moveVoltage(velocityToVoltage(fastVelocity));
       IntakeM.move(-127);
-      wait(100);
+      wait(175);
       IntakeM.move(0);
       goalHeight = 0;
       lift.setTarget(heights[goalHeight]);
@@ -113,7 +114,7 @@ void opcontrol() {
     }else if(runFlywheelMediumButton.changedToPressed()){
       flywheel.moveVoltage(velocityToVoltage(mediumVelocity));
       IntakeM.move(-127);
-      wait(100);
+      wait(175);
       IntakeM.move(0);
       goalHeight = 0;
       lift.setTarget(heights[goalHeight]);
@@ -129,7 +130,7 @@ void opcontrol() {
       if(goalHeight != 0){
         flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
         IntakeM.move(-127);
-        wait(100);
+        wait(175);
         IntakeM.move(0);
       }
       goalHeight = 0;
