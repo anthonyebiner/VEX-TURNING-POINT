@@ -1,7 +1,7 @@
 #include "declareStuff.hpp"
 
  void redFrontAuton1(){
-   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, 0_ft, 0_deg}}, "A");
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, 0_ft, 0_deg}}, "A"); //hello aiden
    driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, -0.5_ft, 0_deg}}, "B");
    driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{4_ft, 0_ft, 0_deg}}, "C");
    driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, 0.5_ft, 0_deg}}, "D");
