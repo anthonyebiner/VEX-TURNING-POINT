@@ -20,15 +20,15 @@ Purpose:						Competition code for 6526D
 #include "declareStuff.hpp"
 
 int fastVelocity = 525;
-int mediumVelocity = 480;
-int defaultVelocity = 500;
+int barrageVelocity2 = 435;
+int barrageVelocity = 500;
 
 bool twoBalls = false;
 
 const int NUM_HEIGHTS = 5;
 const int height0 = -50;
 const int height1 = 90;
-const int height2 = 300;
+const int height2 = 500;
 const int height3 = 1200;
 const int height4 = 1600;
 
@@ -49,33 +49,22 @@ void opcontrol() {
   goalHeight = 1;
   lift.setTarget(heights[goalHeight]);
 
-  //flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+  flywheel.moveVoltage(velocityToVoltage(barrageVelocity));
   IntakeM.move(127);
 
   while(true){
-    if(barrageButton.isPressed() && runFlywheelFastButton.isPressed() && intakeInButton.changedToPressed()){
+    if(barrageButton.isPressed() && intakeInButton.changedToPressed()){
       IntakeM.move(127);
-      wait(750);
-      flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
-    }else if(barrageButton.isPressed() && runFlywheelMediumButton.isPressed() && intakeInButton.changedToPressed()){
-      IntakeM.move(127);
-      wait(0);
       flywheel.moveVoltage(0);
       wait(750);
-      flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
-    }else if(barrageButton.isPressed() && intakeInButton.changedToPressed()){
+      flywheel.moveVoltage(velocityToVoltage(barrageVelocity));
+    }else if((barrageButton.isPressed() || runFlywheelFastButton.isPressed() || barrageButton2.isPressed()) && intakeInButton.isPressed()){
       IntakeM.move(127);
-      wait(0);
-      flywheel.moveVoltage(0);
-      wait(750);
-      flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
-    }else if((barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed()) && intakeInButton.isPressed()){
-      IntakeM.move(127);
-    }else if(!(barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed()) && intakeOutButton.isPressed()){
+    }else if(!(barrageButton.isPressed() || runFlywheelFastButton.isPressed() || barrageButton2.isPressed()) && intakeOutButton.isPressed()){
   		IntakeM.move(-127);
-    }else if(!(barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed()) && intakeInButton.isPressed()){
+    }else if(!(barrageButton.isPressed() || runFlywheelFastButton.isPressed() || barrageButton2.isPressed()) && intakeInButton.isPressed()){
   		IntakeM.move(0);
-    }else if((barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed())){
+    }else if((barrageButton.isPressed() || runFlywheelFastButton.isPressed() || barrageButton2.isPressed())){
   		IntakeM.move(0);
     }else if(goalHeight > 1){
   		IntakeM.move(0);
@@ -94,32 +83,29 @@ void opcontrol() {
     }
 
     if(runFlywheelFastButton.changedToPressed()){
-      if(barrageButton.isPressed())
-        flywheel.moveVoltage(velocityToVoltage(390));
-      else
-        flywheel.moveVoltage(velocityToVoltage(fastVelocity));
+      flywheel.moveVoltage(velocityToVoltage(fastVelocity));
       IntakeM.move(-127);
       wait(175);
       IntakeM.move(0);
       goalHeight = 0;
       lift.setTarget(heights[goalHeight]);
     }else if(runFlywheelFastButton.changedToReleased()){
-      flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+      flywheel.moveVoltage(velocityToVoltage(barrageVelocity));
       IntakeM.move(-127);
       wait(250);
       IntakeM.move(0);
       goalHeight = 1;
       lift.setTarget(heights[goalHeight]);
       wait(300);
-    }else if(runFlywheelMediumButton.changedToPressed()){
-      flywheel.moveVoltage(velocityToVoltage(mediumVelocity));
+    }else if(barrageButton2.changedToPressed()){
+      flywheel.moveVoltage(velocityToVoltage(barrageVelocity2));
       IntakeM.move(-127);
       wait(175);
       IntakeM.move(0);
       goalHeight = 0;
       lift.setTarget(heights[goalHeight]);
-    }else if(runFlywheelMediumButton.changedToReleased()){
-      flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+    }else if(barrageButton2.changedToReleased()){
+      flywheel.moveVoltage(velocityToVoltage(barrageVelocity));
       IntakeM.move(-127);
       wait(250);
       IntakeM.move(0);
@@ -128,7 +114,7 @@ void opcontrol() {
       wait(300);
     }else if(barrageButton.changedToPressed()){
       if(goalHeight != 0){
-        flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+        flywheel.moveVoltage(velocityToVoltage(barrageVelocity));
         IntakeM.move(-127);
         wait(175);
         IntakeM.move(0);
@@ -137,7 +123,7 @@ void opcontrol() {
       lift.setTarget(heights[goalHeight]);
     }else if(barrageButton.changedToReleased()){
       if(goalHeight != 1){
-        flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+        flywheel.moveVoltage(velocityToVoltage(barrageVelocity));
         IntakeM.move(-127);
         wait(250);
         IntakeM.move(0);
@@ -147,20 +133,23 @@ void opcontrol() {
       wait(300);
     }
 
-
-    drive.arcade(MasterC.getAnalog(ControllerAnalog::leftY), MasterC.getAnalog(ControllerAnalog::leftX));
-
+    if(!(barrageButton.isPressed()||runFlywheelFastButton.isPressed()||barrageButton2.isPressed())){
+      drive.arcade(MasterC.getAnalog(ControllerAnalog::leftY), MasterC.getAnalog(ControllerAnalog::leftX));
+    }else if(barrageButton.isPressed() && intakeInButton.isPressed()){
+      drive.arcade(MasterC.getAnalog(ControllerAnalog::leftY), MasterC.getAnalog(ControllerAnalog::leftX));
+    }else{
+      drive.arcade(MasterC.getAnalog(ControllerAnalog::leftY), MasterC.getAnalog(ControllerAnalog::leftX));
+    }
 
     if(abs(fastVelocity - Flywheel1M.get_actual_velocity()) < 20 && runFlywheelFastButton.isPressed()){
       MasterC.rumble("-");
-    }else if(abs(mediumVelocity - Flywheel1M.get_actual_velocity()) < 20 && runFlywheelMediumButton.isPressed()){
+    }else if(abs(barrageVelocity2 - Flywheel1M.get_actual_velocity()) < 20 && barrageButton2.isPressed()){
       MasterC.rumble("-");;
     }
 
-
     if(twoBallsButton.changedToReleased()){
       twoBalls = !twoBalls;
-    }else if((barrageButton.isPressed() || runFlywheelFastButton.isPressed() || runFlywheelMediumButton.isPressed()) && intakeInButton.isPressed()){
+    }else if((barrageButton.isPressed() || runFlywheelFastButton.isPressed() || barrageButton2.isPressed()) && intakeInButton.isPressed()){
       twoBalls = false;
     }
 

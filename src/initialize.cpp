@@ -13,7 +13,7 @@ Controller MasterC;
 ControllerButton intakeInButton(ControllerDigital::L1);
 ControllerButton intakeOutButton(ControllerDigital::L2);
 ControllerButton runFlywheelFastButton(ControllerDigital::X);
-ControllerButton runFlywheelMediumButton(ControllerDigital::A);
+ControllerButton barrageButton2(ControllerDigital::A);
 ControllerButton twoBallsButton(ControllerDigital::B);
 ControllerButton barrageButton(ControllerDigital::Y);
 ControllerButton liftUpButton(ControllerDigital::R1);
@@ -29,7 +29,7 @@ ChassisControllerIntegrated drive = ChassisControllerFactory::create(
 
 MotorGroup flywheel({Flywheel1M,Flywheel2M});
 
-AsyncMotionProfileController driveController = AsyncControllerFactory::motionProfile(1.0, 2.0, 5.0, drive);
+AsyncMotionProfileController driveController = AsyncControllerFactory::motionProfile(1, 2, 5.0, drive);
 
 void initialize() {
 	Flywheel1M.set_brake_mode(MOTOR_BRAKE_COAST);

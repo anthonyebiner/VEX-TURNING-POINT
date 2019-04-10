@@ -58,22 +58,20 @@ void shootTwoBallsDriving(void* param){
   goalHeight = 1;
   lift.setTarget(heights[goalHeight]);
 
-  flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+  flywheel.moveVoltage(velocityToVoltage(barrageVelocity));
 }
 
 void shootBarage(){
-  flywheel.moveVoltage(velocityToVoltage(fastVelocity));
+  flywheel.moveVoltage(velocityToVoltage(420));
   IntakeM.move(-127);
-  pros::delay(100);
+  pros::delay(250);
   IntakeM.move(0);
   goalHeight = 0;
   lift.setTarget(heights[goalHeight]);
   pros::delay(500);
   IntakeM.move(127);
-  pros::delay(0); //adjust
-  flywheel.moveVoltage(0);
-  pros::delay(600);
-  flywheel.moveVoltage(velocityToVoltage(defaultVelocity));
+  pros::delay(1000);
+  flywheel.moveVoltage(velocityToVoltage(420));
   pros::delay(750);
   goalHeight = 1;
   lift.setTarget(heights[goalHeight]);

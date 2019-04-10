@@ -16,7 +16,7 @@ extern Controller MasterC;
 extern ControllerButton intakeInButton;
 extern ControllerButton intakeOutButton;
 extern ControllerButton runFlywheelFastButton;
-extern ControllerButton runFlywheelMediumButton;
+extern ControllerButton barrageButton2;
 extern ControllerButton twoBallsButton;
 extern ControllerButton barrageButton;
 extern ControllerButton liftUpButton;
@@ -30,8 +30,8 @@ extern MotorGroup flywheel;
 extern AsyncMotionProfileController driveController;
 
 extern int fastVelocity;
-extern int mediumVelocity;
-extern int defaultVelocity;
+extern int barrageVelocity;
+extern int barrageVelocity2;
 
 extern bool twoBalls;
 
