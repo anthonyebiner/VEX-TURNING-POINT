@@ -77,7 +77,24 @@ void shootBarage(){
   lift.setTarget(heights[goalHeight]);
   pros::delay(300);
 }
-
+void shootBarageFront(){
+  flywheel.moveVoltage(velocityToVoltage(550));
+  IntakeM.move(-127);
+  pros::delay(250);
+  IntakeM.move(0);
+  goalHeight = 0;
+  lift.setTarget(heights[goalHeight]);
+  pros::delay(500);
+  IntakeM.move(127);
+  pros::delay(100);
+  flywheel.moveVoltage(0);
+  pros::delay(1000);
+  flywheel.moveVoltage(velocityToVoltage(525));
+  pros::delay(750);
+  goalHeight = 1;
+  lift.setTarget(heights[goalHeight]);
+  pros::delay(300);
+}
 void testFlywheel(){
   printf("Started \n");
   for(int i = 0; i <= 12000; i+= 500){

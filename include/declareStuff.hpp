@@ -52,5 +52,6 @@ void indexerIn();
 void shootBall();
 void shootTwoBallsDriving();
 void shootBarage();
+void shootBarageFront();
 void testFlywheel();
 #endif

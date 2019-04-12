@@ -1,11 +1,11 @@
 #include "declareStuff.hpp"
 
- void redFrontAuton1(){
-   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, 0_ft, 0_deg}}, "A"); //hello aiden
+ void redFrontAuton1(){         //this auton does not drive forwrd
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3.75_ft, 0_ft, 0_deg}}, "A"); //hello aiden
    driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, -0.5_ft, 0_deg}}, "B");
-   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{4_ft, 0_ft, 0_deg}}, "C");
-   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, 0.5_ft, 0_deg}}, "D");//Hi Anthony, Henry is a stand up guy.
-
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{1.0_ft, 0_ft, 0_deg}}, "C");//backwards after forward, backward, froward
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3.75_ft, 0.5_ft, 0_deg}}, "D");//Hi Anthony, Henry is a stand up guy.
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{0.75_ft, 0_ft, 0_deg}}, "E"); //hello aiden
    goalHeight = 1;
    lift.setTarget(heights[goalHeight]);
 
@@ -13,15 +13,16 @@
 
    driveController.setTarget("A");
    driveController.waitUntilSettled();
-   driveController.setTarget("B", true);
+   driveController.setTarget("D",true);
    driveController.waitUntilSettled();
-
-   drive.turnAngle(-82_deg);
-
+   driveController.setTarget("E");
+   driveController.waitUntilSettled();
+   drive.turnAngle(-80_deg);
+   driveController.setTarget("C",true);
    pros::delay(0);
 
-   shootBarage();
-
+   shootBarageFront();
+/*
    drive.turnAngle(33_deg);
 
    pros::delay(0);
@@ -30,10 +31,37 @@
 
    driveController.setTarget("C");
    driveController.waitUntilSettled();
+   */
  }
 
  void redFrontAuton2(){
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3.75_ft, 0_ft, 0_deg}}, "A"); //hello aiden
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3_ft, -0.5_ft, 0_deg}}, "B");
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{0.9_ft, 0_ft, 0_deg}}, "C");//backwards after forward, backward, froward
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{3.75_ft, 0.5_ft, 0_deg}}, "D");//Hi Anthony, Henry is a stand up guy.
+   driveController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{0.75_ft, 0_ft, 0_deg}}, "E"); //hello aiden
+   goalHeight = 1;
+   lift.setTarget(heights[goalHeight]);
 
+   IntakeM.move(127);
+
+   driveController.setTarget("A");
+   driveController.waitUntilSettled();
+   driveController.setTarget("D",true);
+   driveController.waitUntilSettled();
+   driveController.setTarget("E");
+   driveController.waitUntilSettled();
+   drive.turnAngle(-85_deg);
+   driveController.setTarget("C",true);
+   pros::delay(0);
+   shootBarageFront();
+   pros::delay(1000);
+   drive.turnAngle(-5_deg);
+   drive.waitUntilSettled();
+   driveController.setTarget("A");
+   driveController.waitUntilSettled();
+   driveController.setTarget("A",true);
+   drive.turnAngle(45);
  }
 
  void redBackAuton1(){
@@ -167,6 +195,5 @@
 
  void autonomous() {
    flywheel.moveVoltage(velocityToVoltage(415));
-   redBackAuton1();
-
+   redFrontAuton1();
  }
