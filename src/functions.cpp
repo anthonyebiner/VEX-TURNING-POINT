@@ -86,10 +86,30 @@ void shootBarageFront(){
   lift.setTarget(heights[goalHeight]);
   pros::delay(500);
   IntakeM.move(127);
-  pros::delay(100);
+  pros::delay(75);
   flywheel.moveVoltage(0);
   pros::delay(1000);
   flywheel.moveVoltage(velocityToVoltage(525));
+  pros::delay(750);
+  goalHeight = 1;
+  lift.setTarget(heights[goalHeight]);
+  pros::delay(300);
+}
+
+void shootBarageFront2()
+{
+  flywheel.moveVoltage(velocityToVoltage(450)); //originally 520
+  IntakeM.move(-127);
+  pros::delay(250);
+  IntakeM.move(0);
+  goalHeight = 0;
+  lift.setTarget(heights[goalHeight]);
+  pros::delay(500);
+  IntakeM.move(127);
+  pros::delay(75);
+  flywheel.moveVoltage(0);
+  pros::delay(1000);
+  flywheel.moveVoltage(velocityToVoltage(450));
   pros::delay(750);
   goalHeight = 1;
   lift.setTarget(heights[goalHeight]);

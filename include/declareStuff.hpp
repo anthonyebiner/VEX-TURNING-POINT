@@ -54,4 +54,6 @@ void shootTwoBallsDriving();
 void shootBarage();
 void shootBarageFront();
 void testFlywheel();
+void shootBarageFront2();
+
 #endif
